@@ -11,3 +11,5 @@ export const Stage = {
   DRAW_CANVAS_TWO: 3,
   INACTIVE: 4
 }
+
+export const GAME_NAME = 'collab-sketch';

@@ -8,5 +8,8 @@
     "strictNullChecks": false,
     "esModuleInterop": true,
     "experimentalDecorators": true
-  }
+  },
+  "include": [
+    "src/server/**/*.ts"
+  ]
 }
