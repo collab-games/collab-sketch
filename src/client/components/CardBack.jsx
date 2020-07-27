@@ -6,6 +6,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import {isEmpty, isNil} from "lodash";
 import {IoIosLogIn} from "react-icons/io";
+import starryNightImg from 'public/starry_night.jpg';
 
 class CardBack extends React.Component {
   constructor(props) {
@@ -53,7 +54,7 @@ class CardBack extends React.Component {
     const { inputError } = this.state;
     return(
       <Card>
-        <Card.Img variant="top" src="/starry_night.jpg"/>
+        <Card.Img variant="top" src={starryNightImg} />
         <Card.Body>
           <Row className="card-back-row">
               <InputGroup className="mb-3">

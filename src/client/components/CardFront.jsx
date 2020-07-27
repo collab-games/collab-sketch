@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import {IoIosAddCircle,IoIosLogIn } from 'react-icons/io';
+import starryNightImg from 'public/starry_night.jpg';
 
 class CardFront extends React.Component {
   constructor(props) {
@@ -50,7 +51,7 @@ class CardFront extends React.Component {
     const { inputError } = this.state;
     return(
       <Card>
-        <Card.Img variant="top" src="/starry_night.jpg"/>
+        <Card.Img variant="top" src={starryNightImg} />
         <Card.Body>
           <Row className="card-row">
             <InputGroup className="mb-3">
