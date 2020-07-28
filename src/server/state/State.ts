@@ -3,12 +3,13 @@ import {Player} from "./Player";
 import {Canvas} from "./Canvas";
 import {Settings} from "./Settings";
 import {Turn} from "./Turn";
+import {GameStatus} from "../../common/constants";
 
 export class State extends Schema {
     @type({map: Player}) players : MapSchema<Player>;
     @type(Canvas) canvasOne: Canvas;
     @type(Canvas) canvasTwo: Canvas;
-    @type("string") status: string;
+    @type("uint8") status: number;
     @type(Settings) settings: Settings;
     @type(Turn) turn: Turn;
 
@@ -17,6 +18,7 @@ export class State extends Schema {
         this.players = new MapSchema<Player>();
         this.turn = new Turn();
         this.settings = new Settings(90, 15, 20);
+        this.status = GameStatus.WAITING;
     }
 
     createPlayer(sessionId: string, playerId: number, playerName: string) {

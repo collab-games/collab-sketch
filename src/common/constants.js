@@ -1,3 +1,5 @@
+export const GAME_NAME = 'collab-sketch';
+export const MIN_PLAYERS_REQUIRED = 3;
 export const GameStatus = {
   WAITING: 0,
   STARTED: 1,
@@ -11,5 +13,3 @@ export const Stage = {
   DRAW_CANVAS_TWO: 3,
   INACTIVE: 4
 }
-
-export const GAME_NAME = 'collab-sketch';

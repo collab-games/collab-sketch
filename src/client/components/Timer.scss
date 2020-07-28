@@ -1,0 +1,20 @@
+@import "src/client/variables";
+
+.count-down-timer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: $brand-color-yellow;
+    font-size: 1.5rem;
+    font-weight: bold;
+    z-index: $z-index-override;
+    position: absolute;
+    padding-top: 1vh;
+    top: 0;
+    left: 48vw;
+}
+
+.count-down-timer .time {
+    margin-left: 5px;
+}
+
