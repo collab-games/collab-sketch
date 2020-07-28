@@ -1,5 +1,6 @@
 import { Room, Client } from "colyseus";
 import {State} from "../state/State";
+import {GameStatus} from "../../common/constants";
 
 export class CollabSketchRoom extends Room<State> {
 
@@ -16,6 +17,10 @@ export class CollabSketchRoom extends Room<State> {
       this.password = options.password;
       this.setPrivate().then(() => console.log('Private Room Created!'));
     }
+
+    this.onMessage("start-game",this.startGame.bind(this));
+    this.onMessage("end-game",this.endGame.bind(this));
+
   }
 
   onJoin (client: Client, options: any): void {
@@ -37,4 +42,15 @@ export class CollabSketchRoom extends Room<State> {
     return this.counter++;
   }
 
+  private startGame(client: Client): void {
+    if(this.state.players[client.sessionId].id === 0) {
+      this.state.status = GameStatus.STARTED;
+    }
+  }
+
+  private endGame(client: Client) {
+    if(this.state.players[client.sessionId].id === 0) {
+      this.state.status = GameStatus.ENDED;
+    }
+  }
 }

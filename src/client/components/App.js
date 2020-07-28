@@ -1,7 +1,7 @@
 import React from 'react';
 import {Client} from "colyseus.js";
 import {isEmpty} from "lodash";
-import {Board} from "./board";
+import CollabSketchBoard from "./collabSketchBoard";
 import Lobby from "./Lobby";
 import {GAME_NAME} from "../../common/constants";
 
@@ -19,6 +19,7 @@ class App extends React.Component {
     this.createRoom = this.createRoom.bind(this);
     this.joinRoom = this.joinRoom.bind(this);
     this.shouldReconnect = this.shouldReconnect.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
   }
 
   async componentDidMount() {
@@ -76,6 +77,10 @@ class App extends React.Component {
     localStorage.setItem(`${GAME_NAME}-${room.id}`, JSON.stringify(credentials));
   }
 
+  sendMessage(type, data) {
+    this.state.room.send(type, data);
+  }
+
   shouldReconnect() {
     return !isEmpty(window.location.hash) && !this.state.room;
   }
@@ -84,9 +89,11 @@ class App extends React.Component {
     let {secret, G} = this.state;
     return (
         <div className="player-container">
-          { G ? <Board
+          { G ? <CollabSketchBoard
             G={G}
+            gameID={this.state.gameId}
             playerID={G.players[secret]["id"]}
+            sendMessage={this.sendMessage}
           /> : !this.shouldReconnect() ? <Lobby
             createRoom={this.createRoom}
             joinRoom={this.joinRoom}

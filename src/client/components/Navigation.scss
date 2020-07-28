@@ -1,0 +1,45 @@
+@import "src/client/variables";
+
+.navbar.navigation {
+  background-color: $brand-color-primary;
+  height: 5vh;
+  padding: 0 1rem;
+
+  & .navbar-brand, .navbar-text {
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding: 0 0 0 2.5rem;
+    line-height: 2rem;
+    background-image: url("/public/collab-sketch-logo.svg");
+    background-repeat: no-repeat;
+    color: $color-light;
+  }
+
+  & .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  & .form-inline {
+
+    & .round {
+      color: $brand-color-yellow;
+      font-weight: bold;
+      font-size: 1.4rem;
+      margin: 0 5px;
+    }
+
+    & .nav-button, .nav-button:hover, .nav-button:active {
+      background-color: $brand-color-yellow;
+      color: $color-dark;
+      font-size: 1.2rem;
+      width: 10rem;
+      text-align: center;
+      margin: 0 5px;
+    }
+  }
+
+  & .end-game-button {
+    z-index: $z-index-override;
+  }
+}

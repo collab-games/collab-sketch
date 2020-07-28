@@ -1,0 +1,54 @@
+@import "src/variables";
+
+.board {
+    border-collapse: collapse;
+    font-family: monospace;
+    display: flex;
+    padding-left: 1rem;
+
+    & .word {
+        position: relative;
+        font-style: italic;
+        font-size: 1.2rem;
+        height: 5vh;
+        padding-top: 1vh;
+
+        & span {
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        & span.reveal {
+            background-color: $brand-color-primary;
+            color: white;
+            padding: 0 5px;
+            border-radius: 5px;
+        }
+
+    }
+}
+
+.main {
+    height: $content-height;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    & .notification {
+        height: 4vh;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: $brand-color-primary;
+        padding: 0.5rem 1rem;
+    }
+}
+
+.sidebar {
+    height: 93.5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
