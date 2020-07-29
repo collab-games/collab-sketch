@@ -16,7 +16,7 @@ class WaitingRoom extends React.Component {
   static propTypes = {
     G: PropTypes.any.isRequired,
     gameID: PropTypes.string.isRequired,
-    playerID: PropTypes.number.isRequired,
+    player: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -38,7 +38,7 @@ class WaitingRoom extends React.Component {
   }
 
   getAdminPlayer() {
-    return find(this.props.G.players, [id,0]);
+    return find(this.props.G.players, ['id',0]);
   }
 
   adminName() {
@@ -66,7 +66,7 @@ class WaitingRoom extends React.Component {
   }
 
   render() {
-    const {G, playerID, gameID} = this.props;
+    const {G, player, gameID} = this.props;
     const { quote } = this.state;
     return (
       <div>
@@ -74,7 +74,7 @@ class WaitingRoom extends React.Component {
           <Row>
             <Col md={{span: 10}}>
               <Row>
-                {this.isAdmin(playerID) ? null : this.waitingInfo()}
+                {this.isAdmin(player.id) ? null : this.waitingInfo()}
               </Row>
               <Row>
                 <Quote text={quote.quote} author={quote.author}/>
@@ -86,7 +86,7 @@ class WaitingRoom extends React.Component {
             </Col>
             <Col style={{paddingRight: 0}} md={{span: 2}}>
               <div>
-                {/*<PlayerList G={G} players={this.getActivePlayers()} currentPlayerId={playerID}/>*/}
+                {/*<PlayerList G={G} players={this.getActivePlayers()} currentPlayerId={player.id}/>*/}
               </div>
             </Col>
           </Row>

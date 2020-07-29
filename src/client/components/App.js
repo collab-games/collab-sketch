@@ -92,7 +92,7 @@ class App extends React.Component {
           { G ? <CollabSketchBoard
             G={G}
             gameID={this.state.gameId}
-            playerID={G.players[secret]["id"]}
+            player={G.players[secret]}
             sendMessage={this.sendMessage}
           /> : !this.shouldReconnect() ? <Lobby
             createRoom={this.createRoom}

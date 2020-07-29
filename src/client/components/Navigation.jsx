@@ -10,10 +10,10 @@ import {FaPlayCircle} from 'react-icons/fa';
 import {IoMdClose} from 'react-icons/io';
 import {GiCheckeredFlag} from 'react-icons/gi';
 import {GameStatus, MIN_PLAYERS_REQUIRED} from "../../common/constants";
-import {isChoosingStage} from "../game/Players";
-import SelectionTimer from "./SelectionTimer";
-import TurnTimer from "./TurnTimer";
-import {getRound} from "../game/Round";
+// import {isChoosingStage} from "../game/Players";
+// import SelectionTimer from "./SelectionTimer";
+// import TurnTimer from "./TurnTimer";
+// import {getRound} from "../game/Round";
 import "./Navigation.scss";
 
 
@@ -21,7 +21,7 @@ class Navigation extends React.Component {
   static propTypes = {
     G: PropTypes.object.isRequired,
     sendMessage: PropTypes.func.isRequired,
-    playerID: PropTypes.number.isRequired,
+    player: PropTypes.object.isRequired,
     gameID: PropTypes.string.isRequired,
   };
 
@@ -43,7 +43,7 @@ class Navigation extends React.Component {
   }
 
   canStartGame() {
-    return this.props.G.state === GameStatus.WAITING && size(this.getActivePlayers()) >= MIN_PLAYERS_REQUIRED;
+    return this.props.G.status === GameStatus.WAITING && size(this.getActivePlayers()) >= MIN_PLAYERS_REQUIRED;
   }
 
   startGame(event) {
@@ -99,15 +99,15 @@ class Navigation extends React.Component {
   // }
 
   render() {
-    const { playerID, G: { status, settings, turn } } = this.props;
+    const { player, G: { status, settings, turn } } = this.props;
       return (
         <nav className="navbar navigation">
           <NavbarBrand href="/">Collab Sketch</NavbarBrand>
           {/*{status === GameStatus.STARTED && this.renderTimer()}*/}
           <Form inline>
             <div className="round"><GiCheckeredFlag className="icon" /> {`${turn.round}/${settings.numOfRounds}`} </div>
-            {status === GameStatus.WAITING && this.isAdmin(playerID) && this.renderStartGame()}
-            {status === GameStatus.STARTED && this.isAdmin(playerID) && this.renderEndGame()}
+            {status === GameStatus.WAITING && this.isAdmin(player.id) && this.renderStartGame()}
+            {status === GameStatus.STARTED && this.isAdmin(player.id) && this.renderEndGame()}
           </Form>
         </nav>
       );

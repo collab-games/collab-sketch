@@ -25,6 +25,7 @@
     "@svgr/webpack": "^5.4.0",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.1",
+    "@types/lodash": "^4.14.158",
     "babel-loader": "^8.1.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "css-loader": "^4.0.0",

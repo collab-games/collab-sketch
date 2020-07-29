@@ -3,21 +3,20 @@ import PropTypes from "prop-types";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import PlayerList from "../components/PlayerList";
-import ChatBox from "../components/ChatBox";
+// import PlayerList from "../components/PlayerList";
+// import ChatBox from "../components/ChatBox";
 import './PlayArea.scss';
 import CanvasOne from "./Canvas/CanvasOne";
 import CanvasTwo from "./Canvas/CanvasTwo";
-import { choosingPlayerIdFrom, isChoosingStage, isChoosingPlayer } from "../game/Players";
+import {isChoosingStage, choosingPlayerFrom} from "../game/Players";
 import ChooseModal from "./ChooseModal/ChooseModal";
+import {Stage} from "../../common/constants";
 
 class PlayArea extends React.Component {
   static propTypes = {
     G: PropTypes.any.isRequired,
-    ctx: PropTypes.any.isRequired,
-    playerID: PropTypes.string.isRequired,
-    isActive: PropTypes.bool.isRequired,
-    moves: PropTypes.object.isRequired,
+    sendMessage: PropTypes.func.isRequired,
+    player: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -31,18 +30,17 @@ class PlayArea extends React.Component {
   }
 
   isPlayerGuessing() {
-    const { ctx: { activePlayers }, playerID } = this.props;
-    const isDrawing = activePlayers[playerID] === 'drawCanvasTwo' || activePlayers[playerID] === 'drawCanvasOne';
-    return !isDrawing;
+    const { player } = this.props;
+    return player.stage === Stage.GUESS;
   }
 
   showToast() {
-    const { G: {players }, playerID } = this.props;
+    const { G: { players }, player } = this.props;
 
-    if(isChoosingPlayer(players, playerID)) {
+    if(player.stage === Stage.CHOOSE) {
       return null;
     } else if(isChoosingStage(players)) {
-      const message = `${players[choosingPlayerIdFrom(players)].game.name} is choosing a word and co-artist`;
+      const message = `${choosingPlayerFrom(players).name} is choosing a word and co-artist`;
       return (<p className="notification">
         {message}
       </p>);
@@ -51,21 +49,20 @@ class PlayArea extends React.Component {
   }
 
   showChoosingModal() {
-    const { G, moves, playerID } = this.props;
+    const { G, player } = this.props;
     return (
       <ChooseModal
-        words={G.chooseWords}
-        chooseWord={moves.chooseWord}
-        choosePlayer={moves.choosePlayer}
+        words={G.turn.chooseWords}
+        sendMessage={this.props.sendMessage}
         players={G.players}
-        currentPlayerId={playerID}
-        show={isChoosingPlayer(G.players, playerID)}
+        currentPlayerId={player.id}
+        show={player.stage === Stage.CHOOSE}
       />
     );
   }
 
   render() {
-    const {G, ctx, playerID, moves, isActive} = this.props;
+    const {G, sendMessage, player} = this.props;
 
     return(
       <Container fluid={true}>
@@ -75,16 +72,16 @@ class PlayArea extends React.Component {
               { this.showToast() }
               { this.showChoosingModal() }
               <div className='board'>
-                <CanvasOne G={G} ctx={ctx} playerID={playerID} moves={moves} isActive={isActive} />
-                <CanvasTwo G={G} ctx={ctx} playerID={playerID} moves={moves} isActive={isActive} />
+                <CanvasOne G={G} player={player} sendMessage={sendMessage} />
+                <CanvasTwo G={G} player={player} sendMessage={sendMessage} />
               </div>
             </div>
           </Col>
           <Col style={{paddingRight: 0 }} md={{span: 2}}>
             <div className="sidebar">
-              <PlayerList G={G} players={this.getActivePlayers()} currentPlayerId={playerID}/>
-              <ChatBox G={G} moves={moves} currentPlayer={G.players[playerID]}
-                       isPlayerGuessing={this.isPlayerGuessing()}/>
+              {/*<PlayerList G={G} players={this.getActivePlayers()} currentPlayerId={playerID}/>*/}
+              {/*<ChatBox G={G} moves={moves} currentPlayer={G.players[playerID]}*/}
+              {/*         isPlayerGuessing={this.isPlayerGuessing()}/>*/}
             </div>
           </Col>
         </Row>

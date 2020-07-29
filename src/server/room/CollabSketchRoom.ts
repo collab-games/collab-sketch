@@ -1,6 +1,8 @@
 import { Room, Client } from "colyseus";
+import {find} from "lodash";
 import {State} from "../state/State";
-import {GameStatus} from "../../common/constants";
+import {GameStatus, Stage} from "../../common/constants";
+import {Player} from "../state/Player";
 
 export class CollabSketchRoom extends Room<State> {
 
@@ -20,6 +22,8 @@ export class CollabSketchRoom extends Room<State> {
 
     this.onMessage("start-game",this.startGame.bind(this));
     this.onMessage("end-game",this.endGame.bind(this));
+    this.onMessage("choose-word",this.chooseWord.bind(this));
+    this.onMessage("choose-player",this.choosePlayer.bind(this));
 
   }
 
@@ -51,6 +55,19 @@ export class CollabSketchRoom extends Room<State> {
   private endGame(client: Client) {
     if(this.state.players[client.sessionId].id === 0) {
       this.state.status = GameStatus.ENDED;
+    }
+  }
+
+  private chooseWord(client: Client, data: any) {
+    if(this.state.players[client.sessionId].stage === Stage.CHOOSE) {
+      this.state.turn.currentWord = data.word;
+    }
+  }
+
+  private choosePlayer(client: Client, data: any) {
+    if(this.state.players[client.sessionId].stage === Stage.CHOOSE) {
+      const player: Player = find(this.state.players, ['id', data.playerId]);
+      player.stage = Stage.DRAW_CANVAS_TWO;
     }
   }
 }
