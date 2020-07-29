@@ -1,4 +1,5 @@
 import findKey from 'lodash/findKey';
+import find from 'lodash/find';
 import isEmpty from 'lodash/isEmpty';
 import size from 'lodash/size';
 import range from 'lodash/range';
@@ -57,15 +58,21 @@ export const nextActivePlayersForSelectionFrom = (players, totalPlayers) => {
 
 export const firstCanvasPlayerIdFrom = (players) => findKey(players, (player) => player.turn.action === 'drawCanvasOne');
 
+export const firstCanvasPlayerFrom = (players) => find(players, ['stage', Stage.DRAW_CANVAS_ONE]);
+
 export const secondCanvasPlayerIdFrom = (players) => findKey(players, (player) => player.turn.action === 'drawCanvasTwo');
+
+export const secondCanvasPlayerFrom = (players) => find(players, ['stage', Stage.DRAW_CANVAS_TWO]);
 
 export const artistIdFrom = (players) =>  choosingPlayerIdFrom(players)|| firstCanvasPlayerIdFrom(players);
 
-export const choosingPlayerIdFrom = (players) => findKey(players, player => player.turn.action === 'choose');
+export const choosingPlayerIdFrom = (players) => find(players, player => player.stage === Stage.CHOOSE).id;
+
+export const choosingPlayerFrom = (players) => find(players, player => player.stage === Stage.CHOOSE);
 
 const coArtistIdFrom = (players) => findKey(players, player => player.turn.coArtist);
 
-export const playerNames = players => Object.entries(players).map( ([key, player]) => ({ playerId: key, playerName: player.game.name }));
+export const playerNames = players => Object.values(players).map( player => ({ playerId: player.id, playerName: player.name }));
 
 export const playerNameFrom = (playerId, players) => players[playerId].game.name;
 

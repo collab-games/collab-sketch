@@ -7,26 +7,32 @@ import isEmpty from 'lodash/isEmpty';
 import ChoosePlayer from "./ChoosePlayer";
 import ChooseWords from "./ChooseWords";
 
-const ChooseModal = (props) => {
-  const { words, chooseWord, choosePlayer, players, currentPlayerId, show } = props;
-  return (
+class ChooseModal extends React.Component {
+  static propTypes = {
+    words: PropTypes.array.isRequired,
+    sendMessage: PropTypes.func.isRequired,
+    players: PropTypes.object.isRequired,
+    currentPlayerId: PropTypes.number.isRequired,
+    show: PropTypes.bool.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const {words, sendMessage, players, show, currentPlayerId} = this.props;
+    return (
       <Modal show={show} size="lg" className="choose-modal">
         <ModalBody className="modal-outline">
-                {isEmpty(words)
-                  ? <ChoosePlayer choosePlayer={choosePlayer} players={players} currentPlayerId={currentPlayerId}/>
-                  : <ChooseWords words={words} chooseWord={chooseWord} />
-                }
+          {isEmpty(words)
+            ? <ChoosePlayer sendMessage={sendMessage} players={players} currentPlayerId={currentPlayerId}/>
+            : <ChooseWords words={words} sendMessage={sendMessage} />
+          }
         </ModalBody>
       </Modal>
-  );
-};
-
-ChooseModal.propTypes = {
-  words: PropTypes.array.isRequired,
-  chooseWord: PropTypes.func.isRequired,
-  choosePlayer: PropTypes.func.isRequired,
-  players: PropTypes.object.isRequired,
-  currentPlayerId: PropTypes.string.isRequired
-};
+    );
+  }
+}
 
 export default ChooseModal;

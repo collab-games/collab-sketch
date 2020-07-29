@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Painterro from '../../ext/collab-painterro';
+import Painterro from "../../ext/collab-painterro";
 import "./Canvas.scss";
 
 class Canvas extends React.Component {
 
   static propTypes = {
-    snapshot: PropTypes.any,
-    updateSnapshot: PropTypes.func.isRequired,
+    data: PropTypes.string,
+    updateCanvas: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -18,12 +18,12 @@ class Canvas extends React.Component {
 
   updateCanvas(exportableImage) {
     const dataURL = exportableImage.image.asDataURL();
-    this.props.updateSnapshot(dataURL, dataURL);
+    this.props.updateCanvas(dataURL);
   }
 
   componentDidMount() {
      this.painterro = Painterro({
-      id: `canvas-${this.canvasId}`,
+      id: 'canvas',
       activeFillColor: '#00ff00',
       activeFillColorAlpha: 1,
       defaultTool: 'brush',
@@ -40,7 +40,7 @@ class Canvas extends React.Component {
         hoverControl: '#52565e',
       }
     })
-    this.painterro.show(this.props.snapshot);
+    this.painterro.show(this.props.data);
   }
 
   componentWillUnmount() {
@@ -50,7 +50,7 @@ class Canvas extends React.Component {
   render() {
     return (
       <div className="canvas">
-        <div className="canvas-body" id={`canvas-${this.canvasId}`}>
+        <div className="canvas-body" id="canvas" >
         </div>
       </div>
     );
