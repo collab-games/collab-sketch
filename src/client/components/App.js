@@ -47,7 +47,7 @@ class App extends React.Component {
   }
 
   stateChanged(state) {
-    this.setState({ G: state});
+    this.setState({ G: state.toJSON()});
   }
 
   async createRoom(playerName) {

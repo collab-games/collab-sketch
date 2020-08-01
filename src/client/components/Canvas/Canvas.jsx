@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Painterro from "../../ext/collab-painterro";
+import Painterro from "painterro";
 import "./Canvas.scss";
 
 class Canvas extends React.Component {
@@ -44,7 +44,9 @@ class Canvas extends React.Component {
   }
 
   componentWillUnmount() {
-    this.painterro.hide();
+    if(this.painterro) {
+      this.painterro.hide();
+    }
   }
 
   render() {

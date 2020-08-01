@@ -2,7 +2,7 @@ import React from "react";
 import ReadOnlyCanvas from "./ReadOnlyCanvas";
 import PropTypes from "prop-types";
 import repeat from "lodash/repeat";
-import {firstCanvasPlayerFrom, isChoosingStage} from "../../game/Players";
+import {firstCanvasPlayerFrom, isChoosingStage} from "../../../common/players";
 import Canvas from "./Canvas";
 import {Stage} from "../../../common/constants";
 

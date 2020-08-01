@@ -1,5 +1,5 @@
 import React from 'react';
-import { playerNames } from "../../game/Players";
+import { playerNames } from "../../../common/players";
 import Button from "react-bootstrap/Button";
 import PropTypes from "prop-types";
 
@@ -17,19 +17,19 @@ class ChoosePlayer extends React.Component {
 
 
   choosePlayer(playerId) {
-    this.props.sendMessage('choose-player', { playerId });
+    this.props.sendMessage('choose-player', playerId);
   }
 
   render() {
     const { players, currentPlayerId } = this.props;
-    const otherPlayers = playerNames(players).filter(player => player.id !== currentPlayerId);
+    const otherPlayers = playerNames(players).filter(player => player.playerId !== currentPlayerId);
     return (
       <div className="choose-player">
         <p className="choose-player__header">Choose Player</p>
         <div className="choose-player__players"> { otherPlayers.map((player, index) =>
           <Button variant="warning" key={index} className="choose-player__player"
-                  onClick={() => this.choosePlayer(player.id)}>
-            {player.name}
+                  onClick={() => this.choosePlayer(player.playerId)}>
+            {player.playerName}
           </Button>)}
         </div>
       </div>

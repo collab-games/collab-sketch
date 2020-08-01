@@ -13,9 +13,7 @@ import {GameStatus, MIN_PLAYERS_REQUIRED} from "../../common/constants";
 // import {isChoosingStage} from "../game/Players";
 // import SelectionTimer from "./SelectionTimer";
 // import TurnTimer from "./TurnTimer";
-// import {getRound} from "../game/Round";
 import "./Navigation.scss";
-
 
 class Navigation extends React.Component {
   static propTypes = {
@@ -92,10 +90,10 @@ class Navigation extends React.Component {
   }
 
   // renderTimer() {
-  //   const { G, ctx, moves } = this.props;
+  //   const {G} = this.props;
   //   return isChoosingStage(G.players)
-  //     ? <SelectionTimer G={G} ctx={ctx} moves={moves} />
-  //     : <TurnTimer G={G} ctx={ctx} moves={moves} />
+  //     ? <SelectionTimer G={G} />
+  //     : <TurnTimer G={G} />
   // }
 
   render() {
