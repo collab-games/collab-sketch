@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './board.css';
 import {GameStatus} from "../../common/constants";
-// import LeaderBoard from "./board/LeaderBoard";
-// import PlayBoard from "./board/PlayBoard";
 import WaitingRoom from "./board/WaitingRoom";
 import Navigation from "./Navigation";
 import PlayBoard from "./board/PlayBoard";
@@ -15,14 +13,6 @@ class CollabSketchBoard extends React.Component {
         player: PropTypes.object.isRequired,
         sendMessage: PropTypes.func.isRequired,
     };
-    // export const startGame = {
-    //     move: (G, ctx) => {
-    //         if (isAdmin(ctx.currentPlayer)) {
-    //             G.state = GameState.STARTED;
-    //         }
-    //     },
-    //     client: false
-    // };
 
     renderBoard() {
         const {G, gameID, player} = this.props;

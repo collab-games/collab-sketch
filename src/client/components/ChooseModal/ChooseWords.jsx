@@ -15,7 +15,7 @@ class ChooseWords extends React.Component {
   }
 
   chooseWord(word) {
-    this.props.sendMessage('choose-word', { word });
+    this.props.sendMessage('choose-word', word);
   }
 
   render() {

@@ -1,73 +1,76 @@
-import { Room, Client } from "colyseus";
-import {find} from "lodash";
+import {Room, Client, Delayed} from "colyseus";
+import {Dispatcher} from "@colyseus/command"
 import {State} from "../state/State";
-import {GameStatus, Stage} from "../../common/constants";
-import {Player} from "../state/Player";
+import {OnJoinCommand} from "../command/OnJoinCommand";
+import {CreateGameSettingCommand} from "../command/CreateGameSettingCommand";
+import {StartGameCommand} from "../command/StartGameCommand";
+import {EndGameCommand} from "../command/EndGameCommand";
+import {ChooseWordCommand} from "../command/ChooseWordCommand";
+import {ChoosePlayerCommand} from "../command/ChoosePlayerCommand";
+import {UpdateCanvasOneCommand} from "../command/UpdateCanvasOneCommand";
+import {UpdateCanvasTwoCommand} from "../command/UpdateCanvasTwoCommand";
+import {OnLeaveCommand} from "../command/OnLeaveCommand";
 
 export class CollabSketchRoom extends Room<State> {
+    dispatcher = new Dispatcher(this);
 
-  private counter: number = 0;
+    public delayedInterval!: Delayed;
 
-  password: string;
+    private counter: number = 0;
+    private password?: string;
 
-  onCreate (options: any): void {
-    this.setState(new State());
-    this.maxClients = options.maxClients ? options.maxClients : 20;
-    this.autoDispose = true;
-    this.resetAutoDisposeTimeout(10);
-    if(options.password) {
-      this.password = options.password;
-      this.setPrivate().then(() => console.log('Private Room Created!'));
+    onCreate(options: any): void {
+        this.dispatcher.dispatch(new CreateGameSettingCommand(), options);
+        this.resetAutoDisposeTimeout(10);
+        this.password = options.password ? options.password : null;
+
+        this.onMessage("start-game", this.startGame.bind(this));
+        this.onMessage("end-game", this.endGame.bind(this));
+        this.onMessage("choose-word", this.chooseWord.bind(this));
+        this.onMessage("choose-player", this.choosePlayer.bind(this));
+        this.onMessage("update-canvas-one", this.updateCanvasOne.bind(this));
+        this.onMessage("update-canvas-two", this.updateCanvasTwo.bind(this));
+
     }
 
-    this.onMessage("start-game",this.startGame.bind(this));
-    this.onMessage("end-game",this.endGame.bind(this));
-    this.onMessage("choose-word",this.chooseWord.bind(this));
-    this.onMessage("choose-player",this.choosePlayer.bind(this));
-
-  }
-
-  onJoin (client: Client, options: any): void {
-    this.state.createPlayer(client.sessionId, this.incrementCounter(), options.playerName);
-  }
-
-  async onLeave (client: Client, consented: boolean) {
-    try {
-      await this.allowReconnection(client, 20);
-    } catch (e) {
-      this.state.removePlayer(client.sessionId);
+    onJoin(client: Client, options: any): void {
+        const payload = { sessionId: client.sessionId, counter: this.incrementCounter(), playerName: options.playerName };
+        this.dispatcher.dispatch(new OnJoinCommand(), payload);
     }
-  }
 
-  onDispose() {
-  }
-
-  private incrementCounter(): number {
-    return this.counter++;
-  }
-
-  private startGame(client: Client): void {
-    if(this.state.players[client.sessionId].id === 0) {
-      this.state.status = GameStatus.STARTED;
+    async onLeave(client: Client, consented: boolean) {
+        this.dispatcher.dispatch(new OnLeaveCommand(), { client });
     }
-  }
 
-  private endGame(client: Client) {
-    if(this.state.players[client.sessionId].id === 0) {
-      this.state.status = GameStatus.ENDED;
+    onDispose() {
+        this.clock.stop();
     }
-  }
 
-  private chooseWord(client: Client, data: any) {
-    if(this.state.players[client.sessionId].stage === Stage.CHOOSE) {
-      this.state.turn.currentWord = data.word;
+    private startGame(client: Client): void {
+        this.dispatcher.dispatch(new StartGameCommand(), { sessionId: client.sessionId})
     }
-  }
 
-  private choosePlayer(client: Client, data: any) {
-    if(this.state.players[client.sessionId].stage === Stage.CHOOSE) {
-      const player: Player = find(this.state.players, ['id', data.playerId]);
-      player.stage = Stage.DRAW_CANVAS_TWO;
+    private endGame(client: Client): void {
+        this.dispatcher.dispatch(new EndGameCommand(), {sessionId: client.sessionId})
     }
-  }
+
+    private chooseWord(client: Client, word: string) {
+        this.dispatcher.dispatch(new ChooseWordCommand(), { sessionId: client.sessionId, word})
+    }
+
+    private choosePlayer(client: Client, playerId: number) {
+        this.dispatcher.dispatch(new ChoosePlayerCommand(), { sessionId: client.sessionId, playerId})
+    }
+
+    private updateCanvasOne(client: Client, imageData: string) {
+        this.dispatcher.dispatch(new UpdateCanvasOneCommand(), { sessionId: client.sessionId, imageData})
+    }
+
+    private updateCanvasTwo(client: Client, imageData: string) {
+        this.dispatcher.dispatch(new UpdateCanvasTwoCommand(), { sessionId: client.sessionId, imageData})
+    }
+
+    private incrementCounter(): number {
+        return this.counter++;
+    }
 }

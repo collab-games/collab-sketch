@@ -2,6 +2,7 @@ import {filter, Schema, type} from "@colyseus/schema";
 import {Client} from "colyseus";
 
 export class Canvas extends Schema {
+    @type("string") ownerId: string;
     @type("string") data: string;
 
     @filter(function (
@@ -10,8 +11,18 @@ export class Canvas extends Schema {
        value?: Canvas['word'],
        root?: Schema
     ) {
-        return true;
+        return this.ownerId === client.sessionId;
     })
     @type("string") word: string;
     @type("uint8") chars: number;
+
+    constructor() {
+        super();
+    }
+
+    update(sessionId: string, word: string) {
+        this.ownerId = sessionId;
+        this.word = word;
+        this.chars = word.length;
+    }
 }

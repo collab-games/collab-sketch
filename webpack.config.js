@@ -18,7 +18,10 @@ module.exports = function(_env, argv) {
       rules: [
         {
           test: /\.jsx?$/,
-          exclude: /node_modules/,
+          exclude: [
+            path.resolve(__dirname,"node_modules"),
+            path.resolve(__dirname,"src/client/ext")
+            ],
           use: {
             loader: "babel-loader",
             options: {

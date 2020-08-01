@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 import './PlayArea.scss';
 import CanvasOne from "./Canvas/CanvasOne";
 import CanvasTwo from "./Canvas/CanvasTwo";
-import {isChoosingStage, choosingPlayerFrom} from "../game/Players";
+import {isChoosingStage, choosingPlayerFrom} from "../../common/players";
 import ChooseModal from "./ChooseModal/ChooseModal";
 import {Stage} from "../../common/constants";
 
