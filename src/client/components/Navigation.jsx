@@ -10,9 +10,9 @@ import {FaPlayCircle} from 'react-icons/fa';
 import {IoMdClose} from 'react-icons/io';
 import {GiCheckeredFlag} from 'react-icons/gi';
 import {GameStatus, MIN_PLAYERS_REQUIRED} from "../../common/constants";
-// import {isChoosingStage} from "../game/Players";
-// import SelectionTimer from "./SelectionTimer";
-// import TurnTimer from "./TurnTimer";
+import {isChoosingStage} from "../../common/players";
+import SelectionTimer from "./SelectionTimer";
+import TurnTimer from "./TurnTimer";
 import "./Navigation.scss";
 
 class Navigation extends React.Component {
@@ -89,19 +89,19 @@ class Navigation extends React.Component {
     );
   }
 
-  // renderTimer() {
-  //   const {G} = this.props;
-  //   return isChoosingStage(G.players)
-  //     ? <SelectionTimer G={G} />
-  //     : <TurnTimer G={G} />
-  // }
+  renderTimer() {
+    const {G} = this.props;
+    return isChoosingStage(G.players)
+      ? <SelectionTimer G={G} />
+      : <TurnTimer G={G} />
+  }
 
   render() {
     const { player, G: { status, settings, turn } } = this.props;
       return (
         <nav className="navbar navigation">
           <NavbarBrand href="/">Collab Sketch</NavbarBrand>
-          {/*{status === GameStatus.STARTED && this.renderTimer()}*/}
+          {status === GameStatus.STARTED && this.renderTimer()}
           <Form inline>
             <div className="round"><GiCheckeredFlag className="icon" /> {`${turn.round}/${settings.numOfRounds}`} </div>
             {status === GameStatus.WAITING && this.isAdmin(player.id) && this.renderStartGame()}

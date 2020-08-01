@@ -42,3 +42,5 @@ export const resetStages = (players) => {
 export const isChoosingStage = players => some(Object.values(players), player => player.stage === Stage.CHOOSE);
 
 export const isChoosingPlayer = (players, playerId) => isChoosingStage(players) && playerId === artistIdFrom(players);
+
+export const playerFrom = (players, playerId) => find(players, ['id', playerId]);

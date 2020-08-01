@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-// import PlayerList from "../components/PlayerList";
+import PlayerList from "../components/PlayerList";
 // import ChatBox from "../components/ChatBox";
 import './PlayArea.scss';
 import CanvasOne from "./Canvas/CanvasOne";
@@ -79,7 +79,7 @@ class PlayArea extends React.Component {
           </Col>
           <Col style={{paddingRight: 0 }} md={{span: 2}}>
             <div className="sidebar">
-              {/*<PlayerList G={G} players={this.getActivePlayers()} currentPlayerId={playerID}/>*/}
+              <PlayerList G={G} players={this.getActivePlayers()} currentPlayerId={player.id}/>
               {/*<ChatBox G={G} moves={moves} currentPlayer={G.players[playerID]}*/}
               {/*         isPlayerGuessing={this.isPlayerGuessing()}/>*/}
             </div>

@@ -7,28 +7,29 @@ import './Timer.scss';
 class TurnTimer extends React.Component {
   static propTypes = {
     G: PropTypes.any.isRequired,
-    ctx: PropTypes.any.isRequired,
-    moves: PropTypes.any.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      turn: props.ctx.turn,
+      serverTime: props.G.turn.drawStartTime,
       timer: 0
     };
-    this.endTurn = this.endTurn.bind(this);
+    this.getRemainingTime = this.getRemainingTime.bind(this);
     this.decreaseTimer = this.decreaseTimer.bind(this);
     this.renderTimer = this.renderTimer.bind(this);
     this.timerHandler = null;
-    this.timerTick = new UIfx('/tick.mp3');
+    this.timerTick = new UIfx('public/tick.mp3');
+  }
+
+  getRemainingTime() {
+    return this.props.G.settings.turnPeriod - Math.floor((Date.now() - this.state.serverTime)/1000);
   }
 
   componentDidMount() {
-    const serverTime = this.props.G.turn.startTime;
-    const remainingTime =  this.props.G.settings.turnPeriod - Math.floor((Date.now() - serverTime)/1000);
+    const remainingTime = this.getRemainingTime();
     clearInterval(this.timerHandler);
-    this.timerHandler = setInterval(() => this.decreaseTimer(this.props.ctx.turn), 1000);
+    this.timerHandler = setInterval(() => this.decreaseTimer(), 1000);
     this.setState({ timer: remainingTime });
   }
 
@@ -36,15 +37,10 @@ class TurnTimer extends React.Component {
     clearInterval(this.timerHandler);
   }
 
-  endTurn(turn) {
-    this.props.moves.endTurn(turn);
-  }
-
-  decreaseTimer(turn) {
+  decreaseTimer() {
     const currentTime = this.state.timer - 1;
     if (currentTime <= 0) {
       clearInterval(this.timerHandler);
-      this.endTurn(turn);
     }
     if (currentTime <= 5) this.timerTick.play();
     this.setState({ timer: currentTime });
