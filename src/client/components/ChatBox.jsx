@@ -1,7 +1,7 @@
 import React from 'react';
 import './ChatBox.scss';
 import PropTypes from "prop-types";
-import {MessageType} from "../constants";
+import {MessageType} from "../../common/constants";
 import isEmpty from "lodash/isEmpty";
 
 

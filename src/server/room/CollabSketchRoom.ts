@@ -10,6 +10,7 @@ import {ChoosePlayerCommand} from "../command/ChoosePlayerCommand";
 import {UpdateCanvasOneCommand} from "../command/UpdateCanvasOneCommand";
 import {UpdateCanvasTwoCommand} from "../command/UpdateCanvasTwoCommand";
 import {OnLeaveCommand} from "../command/OnLeaveCommand";
+import {OnGuessWordCommand} from "../command/OnGuessWordCommand";
 
 export class CollabSketchRoom extends Room<State> {
     dispatcher = new Dispatcher(this);
@@ -30,6 +31,7 @@ export class CollabSketchRoom extends Room<State> {
         this.onMessage("choose-player", this.choosePlayer.bind(this));
         this.onMessage("update-canvas-one", this.updateCanvasOne.bind(this));
         this.onMessage("update-canvas-two", this.updateCanvasTwo.bind(this));
+        this.onMessage("guess", this.guessWord.bind(this));
 
     }
 
@@ -68,6 +70,10 @@ export class CollabSketchRoom extends Room<State> {
 
     private updateCanvasTwo(client: Client, imageData: string) {
         this.dispatcher.dispatch(new UpdateCanvasTwoCommand(), { sessionId: client.sessionId, imageData})
+    }
+
+    private guessWord(client: Client, word: string) {
+        this.dispatcher.dispatch(new OnGuessWordCommand(), { sessionId: client.sessionId, word });
     }
 
     private incrementCounter(): number {
