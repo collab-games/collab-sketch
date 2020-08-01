@@ -4,8 +4,8 @@ import {Client} from "colyseus";
 export class Turn extends Schema {
     @type("string") ownerId: string;
     @type("uint8") round: number;
-    @type("uint32") drawStartTime: number;
-    @type("uint32") selectionStartTime: number;
+    @type("uint64") drawStartTime: number;
+    @type("uint64") selectionStartTime: number;
     @type(["uint8"]) guessedPlayers: ArraySchema<number>;
 
     @filter(function (

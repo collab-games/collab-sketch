@@ -9,7 +9,7 @@ import ChooseWords from "./ChooseWords";
 
 class ChooseModal extends React.Component {
   static propTypes = {
-    words: PropTypes.array.isRequired,
+    words: PropTypes.array,
     sendMessage: PropTypes.func.isRequired,
     players: PropTypes.object.isRequired,
     currentPlayerId: PropTypes.number.isRequired,

@@ -12,27 +12,30 @@ class SelectionTimer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      turn: props.G.turn.round,
+      serverTime: props.G.turn.selectionStartTime,
       timer: 0
     };
-    this.endTurn = this.endTurn.bind(this);
+    this.getRemainingTime = this.getRemainingTime.bind(this);
     this.decreaseTimer = this.decreaseTimer.bind(this);
     this.renderTimer = this.renderTimer.bind(this);
     this.timerHandler = null;
-    this.timerTick = new UIfx('/tick.mp3');
+    this.timerTick = new UIfx('public/tick.mp3');
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.G.turn.round > prevState.turn) {
-      return {turn: nextProps.ctx.turn};
+    if (nextProps.G.turn.selectionStartTime > prevState.serverTime) {
+      return { serverTime: nextProps.G.turn.selectionStartTime};
     } else return null;
   }
 
+  getRemainingTime() {
+    return this.props.G.settings.selectionPeriod - Math.floor((Date.now() - this.state.serverTime)/1000);
+  }
+
   componentDidMount() {
-    const serverTime = this.props.G.turn.selectionStartTime;
-    const remainingTime =  this.props.G.settings.selectionPeriod - Math.floor((Date.now() - serverTime)/1000);
+    const remainingTime = this.getRemainingTime();
     clearInterval(this.timerHandler);
-    this.timerHandler = setInterval(() => this.decreaseTimer(this.props.ctx.turn), 1000);
+    this.timerHandler = setInterval(() => this.decreaseTimer(), 1000);
     this.setState({ timer: remainingTime });
   }
 
@@ -40,27 +43,22 @@ class SelectionTimer extends React.Component {
     clearInterval(this.timerHandler);
   }
 
-  endTurn(turn) {
-    this.props.moves.endSelection(turn);
-  }
-
-  decreaseTimer(turn) {
+  decreaseTimer() {
     const currentTime = this.state.timer - 1;
     if (currentTime <= 0) {
       clearInterval(this.timerHandler);
-      this.endTurn(turn);
     }
     if (currentTime <= 5) this.timerTick.play();
     this.setState({ timer: currentTime });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const previousTurn = prevState.turn;
-    const currentTurn = this.state.turn;
-    if (currentTurn > previousTurn) {
+    const previousTime = prevState.serverTime;
+    const currentTime = this.state.serverTime;
+    if (currentTime > previousTime) {
       clearInterval(this.timerHandler);
-      this.timerHandler = setInterval(() => this.decreaseTimer(currentTurn), 1000);
-      this.setState({ timer: prevProps.G.settings.selectionPeriod });
+      this.timerHandler = setInterval(() => this.decreaseTimer(), 1000);
+      this.setState({ timer: this.getRemainingTime() });
     }
   }
 

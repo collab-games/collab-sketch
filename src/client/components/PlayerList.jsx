@@ -1,11 +1,11 @@
 import React from 'react';
 import ListGroup from "react-bootstrap/ListGroup";
-import * as R from 'ramda';
 import PropTypes from 'prop-types';
 import UIfx from 'uifx';
 import {FaTrophy} from 'react-icons/fa';
 import './PlayerList.scss';
 import { GameStatus } from "../../common/constants";
+import {playerFrom} from "../../common/players";
 
 class PlayerList extends React.Component {
   static propTypes = {
@@ -16,23 +16,24 @@ class PlayerList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.correctGuessTone = new UIfx('/you-guess.mp3');
-    this.otherGuessTone = new UIfx('/other-guess.mp3');
+    this.correctGuessTone = new UIfx('public/you-guess.mp3');
+    this.otherGuessTone = new UIfx('public/other-guess.mp3');
   }
 
   componentDidUpdate(prevProps) {
     const { G, players, currentPlayerId } = this.props;
 
     if (G.state === GameStatus.STARTED) {
-      const currentScore = R.pathOr(0, ['game', 'score'], players[currentPlayerId]);
-      const previousScore = R.pathOr(0,['game', 'score'], prevProps.players[currentPlayerId]);
+
+      const currentScore = playerFrom(players, currentPlayerId).score;
+      const previousScore = playerFrom(prevProps.players, currentPlayerId).score;
 
       if (currentScore > previousScore) {
           this.correctGuessTone.play();
       }
 
-      const othersGuessed = Object.entries(players)
-        .find(([key, player]) => ((key !== currentPlayerId) && player.game.score > R.pathOr(0, ['game', 'score'], prevProps.players[key])));
+      const othersGuessed = Object.values(players)
+        .find( player => ((player.id !== currentPlayerId) && player.score > playerFrom(prevProps.players, player.id).score));
 
       if (othersGuessed) {
         this.otherGuessTone.play();
@@ -45,18 +46,18 @@ class PlayerList extends React.Component {
   }
 
   renderPlayers() {
-    const { players } = this.props;
+    const { players, G: { turn: { guessedPlayers } } } = this.props;
 
-    return Object.keys(players)
-      .sort((p1, p2) => players[p2].game.score - players[p1].game.score)
-      .map((playerId, index) =>
+    return Object.values(players)
+      .sort((p1, p2) => p2.score - p1.score)
+      .map((player, index) =>
         <ListGroup.Item
           key={index}
-          className={this.isCurrentPlayer(playerId)?"current":""}
-          variant={(players[playerId].turn.hasGuessed) ? 'success' :''}
+          className={this.isCurrentPlayer(player.id)?"current":""}
+          variant={(guessedPlayers.includes(player.id)) ? 'success' :''}
         >
-          <span >{players[playerId].game.name}</span>
-          <span className="score">{players[playerId].game.score}</span>
+          <span >{player.name}</span>
+          <span className="score">{player.score}</span>
         </ListGroup.Item>);
   }
 
