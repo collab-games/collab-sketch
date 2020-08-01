@@ -20,7 +20,7 @@ export class State extends Schema {
         this.canvasOne = new Canvas();
         this.canvasTwo = new Canvas();
         this.settings = new Settings(90, 15, 20);
-        this.turn = new Turn();
+        this.turn = new Turn(0);
         this.status = GameStatus.WAITING;
     }
 

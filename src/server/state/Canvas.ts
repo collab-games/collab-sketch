@@ -2,6 +2,14 @@ import {filter, Schema, type} from "@colyseus/schema";
 import {Client} from "colyseus";
 
 export class Canvas extends Schema {
+    @filter(function (
+        this: Canvas,
+        client: Client,
+        value?: Canvas['ownerId'],
+        root?: Schema
+    ) {
+        return false;
+    })
     @type("string") ownerId: string;
     @type("string") data: string;
 
