@@ -1,6 +1,7 @@
 import {Client} from "colyseus.js";
 import {GAME_NAME} from "../../common/constants";
 
+
 export default class RoomHandler {
 
   constructor(setStateCallback, updateMessageCallback) {
@@ -45,7 +46,8 @@ export default class RoomHandler {
   }
 
   getWebSocketClient() {
-    return new Client("ws://localhost:2567");
+    const url = window.location.hostname+(window.location.port ? ':'+window.location.port: '');
+    return new Client(`ws://${url}/ws`);
   }
 
   attachListeners() {

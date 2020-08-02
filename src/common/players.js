@@ -32,7 +32,9 @@ export const nextChoosePlayer = (players) => {
   if (currArtistId === undefined) {
     return 0;
   }
-  return (currArtistId + 1) % numOfPlayers;
+  const allPlayerIds = Object.values(players).map(player => player.id).sort((p1,p2) => p2 - p1);
+  const nextIndex = (allPlayerIds.indexOf(currArtistId) + 1) % numOfPlayers;
+  return allPlayerIds[nextIndex];
 };
 
 export const resetStages = (players) => {
