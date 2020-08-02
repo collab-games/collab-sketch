@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PlayerList from "../components/PlayerList";
-// import ChatBox from "../components/ChatBox";
+import ChatBox from "../components/ChatBox";
 import './PlayArea.scss';
 import CanvasOne from "./Canvas/CanvasOne";
 import CanvasTwo from "./Canvas/CanvasTwo";
@@ -17,6 +17,7 @@ class PlayArea extends React.Component {
     G: PropTypes.any.isRequired,
     sendMessage: PropTypes.func.isRequired,
     player: PropTypes.object.isRequired,
+    messages: PropTypes.array.isRequired,
   };
 
   constructor(props) {
@@ -30,16 +31,16 @@ class PlayArea extends React.Component {
   }
 
   isPlayerGuessing() {
-    const { player } = this.props;
+    const {player} = this.props;
     return player.stage === Stage.GUESS;
   }
 
   showToast() {
-    const { G: { players }, player } = this.props;
+    const {G: {players}, player} = this.props;
 
-    if(player.stage === Stage.CHOOSE) {
+    if (player.stage === Stage.CHOOSE) {
       return null;
-    } else if(isChoosingStage(players)) {
+    } else if (isChoosingStage(players)) {
       const message = `${choosingPlayerFrom(players).name} is choosing a word and co-artist`;
       return (<p className="notification">
         {message}
@@ -49,7 +50,7 @@ class PlayArea extends React.Component {
   }
 
   showChoosingModal() {
-    const { G, player } = this.props;
+    const {G, player} = this.props;
     return (
       <ChooseModal
         words={G.turn.chooseWords}
@@ -62,26 +63,26 @@ class PlayArea extends React.Component {
   }
 
   render() {
-    const {G, sendMessage, player} = this.props;
+    const {G, sendMessage, player, messages} = this.props;
 
-    return(
+    return (
       <Container fluid={true}>
         <Row>
           <Col md={{span: 10}}>
             <div className="main">
-              { this.showToast() }
-              { this.showChoosingModal() }
+              {this.showToast()}
+              {this.showChoosingModal()}
               <div className='board'>
-                <CanvasOne G={G} player={player} sendMessage={sendMessage} />
-                <CanvasTwo G={G} player={player} sendMessage={sendMessage} />
+                <CanvasOne G={G} player={player} sendMessage={sendMessage}/>
+                <CanvasTwo G={G} player={player} sendMessage={sendMessage}/>
               </div>
             </div>
           </Col>
-          <Col style={{paddingRight: 0 }} md={{span: 2}}>
+          <Col style={{paddingRight: 0}} md={{span: 2}}>
             <div className="sidebar">
               <PlayerList G={G} players={this.getActivePlayers()} currentPlayerId={player.id}/>
-              {/*<ChatBox G={G} sendMessage={sendMessage} currentPlayer={player}*/}
-              {/*         isPlayerGuessing={this.isPlayerGuessing()}/>*/}
+              <ChatBox sendMessage={sendMessage} currentPlayer={player}
+                       isPlayerGuessing={this.isPlayerGuessing()} messages={messages} />
             </div>
           </Col>
         </Row>

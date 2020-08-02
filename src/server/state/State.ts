@@ -7,7 +7,7 @@ import {Turn} from "./Turn";
 import {GameStatus, Stage} from "../../common/constants";
 
 export class State extends Schema {
-    @type({map: Player}) players : MapSchema<Player>;
+    @type({map: Player}) players: MapSchema<Player>;
     @type(Canvas) canvasOne: Canvas;
     @type(Canvas) canvasTwo: Canvas;
     @type(Settings) settings: Settings;
@@ -34,9 +34,9 @@ export class State extends Schema {
     }
 
     setChoosePlayer(playerId: number) {
-       const player: Player = this.getPlayer(playerId);
-       player.stage = Stage.CHOOSE;
-       this.turn.ownerId = this.getSessionIdForChoosePlayer();
+        const player: Player = this.getPlayer(playerId);
+        player.stage = Stage.CHOOSE;
+        this.turn.ownerId = this.getSessionIdForChoosePlayer();
     }
 
     getPlayer(playerId: number) {

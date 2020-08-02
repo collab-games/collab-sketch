@@ -6,7 +6,7 @@ import {OnSelectionStageCompleteCommand} from "./OnSelectionStageCompleteCommand
 
 export class ChoosePlayerCommand extends Command<State, { sessionId: string, playerId: number }> {
     // @ts-ignore
-    execute({ sessionId, playerId }): Array<Command> {
+    execute({sessionId, playerId}): Array<Command> {
         const player1: Player = this.state.players[sessionId];
         if (player1.stage === Stage.CHOOSE) {
             const player2: Player = this.state.getPlayer(playerId);

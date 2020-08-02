@@ -7,6 +7,7 @@ class PlayBoard extends React.Component {
     G: PropTypes.any.isRequired,
     sendMessage: PropTypes.func.isRequired,
     player: PropTypes.object.isRequired,
+    messages: PropTypes.array.isRequired,
   };
 
   constructor(props) {
@@ -14,9 +15,9 @@ class PlayBoard extends React.Component {
   }
 
   render() {
-    const { G, sendMessage, player} = this.props;
+    const {G, sendMessage, player, messages} = this.props;
     return (
-        <PlayArea G={G} sendMessage={sendMessage} player={player} />
+      <PlayArea G={G} sendMessage={sendMessage} player={player} messages={messages}/>
     )
   }
 }

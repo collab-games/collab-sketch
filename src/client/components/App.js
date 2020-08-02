@@ -1,6 +1,7 @@
 import React from 'react';
 import {Client} from "colyseus.js";
 import {isEmpty} from "lodash";
+import {clone} from "lodash";
 import CollabSketchBoard from "./collabSketchBoard";
 import Lobby from "./Lobby";
 import {GAME_NAME} from "../../common/constants";
@@ -12,7 +13,8 @@ class App extends React.Component {
       gameId: null,
       secret: null,
       room: null,
-      G: null
+      G: null,
+      messages: []
     };
 
     this.stateChanged = this.stateChanged.bind(this);
@@ -20,16 +22,18 @@ class App extends React.Component {
     this.joinRoom = this.joinRoom.bind(this);
     this.shouldReconnect = this.shouldReconnect.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.receiveMessage = this.receiveMessage.bind(this);
   }
 
   async componentDidMount() {
-    if(this.shouldReconnect()) {
+    if (this.shouldReconnect()) {
       console.log('Reconnecting !');
-      const { gameId, secret} = this.parseHash(window.location.hash);
+      const {gameId, secret} = this.parseHash(window.location.hash);
       const client = new Client("ws://localhost:2567")
       const room = await client.reconnect(gameId, secret);
       room.onStateChange.once(this.stateChanged);
       room.onStateChange(this.stateChanged);
+      room.onMessage('message', this.receiveMessage);
       this.setState({room, gameId, secret})
     }
   }
@@ -38,7 +42,7 @@ class App extends React.Component {
     const str = hash.substr(1);
     const entities = str.split('&');
     let result = {};
-    for (let i=0; i < entities.length; i++) {
+    for (let i = 0; i < entities.length; i++) {
       const entity = entities[i];
       const [key, value] = entity.split('=');
       result[key] = value;
@@ -47,7 +51,7 @@ class App extends React.Component {
   }
 
   stateChanged(state) {
-    this.setState({ G: state.toJSON()});
+    this.setState({G: state.toJSON()});
   }
 
   async createRoom(playerName) {
@@ -55,9 +59,10 @@ class App extends React.Component {
     const room = await client.create(GAME_NAME, {playerName});
     room.onStateChange.once(this.stateChanged);
     room.onStateChange(this.stateChanged);
+    room.onMessage('message', this.receiveMessage);
     this.setState({room, gameId: room.id, secret: room.sessionId})
     window.location.hash = `gameId=${room.id}&secret=${room.sessionId}`;
-    localStorage.setItem(`${GAME_NAME}-${room.id}`, JSON.stringify({ [playerName.trim().toLowerCase()]: room.sessionId }));
+    localStorage.setItem(`${GAME_NAME}-${room.id}`, JSON.stringify({[playerName.trim().toLowerCase()]: room.sessionId}));
   }
 
   async joinRoom(roomCode, playerName) {
@@ -65,13 +70,14 @@ class App extends React.Component {
     const room = await client.joinById(roomCode, {playerName});
     const secretStore = localStorage.getItem(`${GAME_NAME}-${room.id}`);
     let credentials;
-    if(secretStore) {
-      credentials = { ...(JSON.parse(secretStore)), [playerName.trim().toLowerCase()]: room.sessionId };
+    if (secretStore) {
+      credentials = {...(JSON.parse(secretStore)), [playerName.trim().toLowerCase()]: room.sessionId};
     } else {
-      credentials = { [playerName.trim().toLowerCase()]: room.sessionId };
+      credentials = {[playerName.trim().toLowerCase()]: room.sessionId};
     }
     room.onStateChange.once(this.stateChanged);
     room.onStateChange(this.stateChanged);
+    room.onMessage('message', this.receiveMessage);
     this.setState({room, gameId: room.id, secret: room.sessionId})
     window.location.hash = `gameId=${room.id}&secret=${room.sessionId}`;
     localStorage.setItem(`${GAME_NAME}-${room.id}`, JSON.stringify(credentials));
@@ -81,25 +87,33 @@ class App extends React.Component {
     this.state.room.send(type, data);
   }
 
+  receiveMessage(data) {
+    const messages = clone(this.state.messages);
+    messages.push(data)
+    this.setState({ messages });
+  }
+
   shouldReconnect() {
     return !isEmpty(window.location.hash) && !this.state.room;
   }
 
   render() {
-    let {secret, G} = this.state;
+    let {secret, G, messages} = this.state;
+    console.log('messages in App', messages);
     return (
-        <div className="player-container">
-          { G ? <CollabSketchBoard
-            G={G}
-            gameID={this.state.gameId}
-            player={G.players[secret]}
-            sendMessage={this.sendMessage}
-          /> : !this.shouldReconnect() ? <Lobby
-            createRoom={this.createRoom}
-            joinRoom={this.joinRoom}
-            gameId={this.state.gameId}
-          />: null }
-        </div>
+      <div className="player-container">
+        {G ? <CollabSketchBoard
+          G={G}
+          gameID={this.state.gameId}
+          player={G.players[secret]}
+          sendMessage={this.sendMessage}
+          messages={messages}
+        /> : !this.shouldReconnect() ? <Lobby
+          createRoom={this.createRoom}
+          joinRoom={this.joinRoom}
+          gameId={this.state.gameId}
+        /> : null}
+      </div>
     );
   }
 }
