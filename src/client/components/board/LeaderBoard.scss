@@ -1,7 +1,7 @@
-@import "src/variables";
+@import "src/client/variables";
 
 .leader-board-container {
-    background: linear-gradient(rgba(white, 0.85), rgba(white, 0.85)), url("/leader-board-bg.jpg");
+    background: linear-gradient(rgba(white, 0.85), rgba(white, 0.85)), url("/public/leader-board-bg.jpg");
     height: $content-height;
 
     & .leader-board {

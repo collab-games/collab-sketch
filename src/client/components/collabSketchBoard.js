@@ -5,6 +5,7 @@ import {GameStatus} from "../../common/constants";
 import WaitingRoom from "./board/WaitingRoom";
 import Navigation from "./Navigation";
 import PlayBoard from "./board/PlayBoard";
+import LeaderBoard from "./board/LeaderBoard";
 
 class CollabSketchBoard extends React.Component {
   static propTypes = {
@@ -17,7 +18,6 @@ class CollabSketchBoard extends React.Component {
 
   renderBoard() {
     const {G, gameID, player, messages} = this.props;
-    console.log('messages in Board', messages);
     switch (G.status) {
       case GameStatus.WAITING:
         return (
@@ -31,8 +31,8 @@ class CollabSketchBoard extends React.Component {
       case GameStatus.STARTED:
         return <PlayBoard G={G} sendMessage={this.props.sendMessage} player={player} messages={messages}/>;
 
-      // case GameStatus.ENDED:
-      //     return <LeaderBoard players={G.players} />;
+      case GameStatus.ENDED:
+          return <LeaderBoard players={G.players} />;
 
       default:
         return null;

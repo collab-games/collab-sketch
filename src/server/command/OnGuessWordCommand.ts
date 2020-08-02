@@ -2,7 +2,6 @@ import {Command} from "@colyseus/command";
 import {State} from "../state/State";
 import {Player} from "../state/Player";
 import {MessageType, Stage} from "../../common/constants";
-import {OnDrawStageCompleteCommand} from "./OnDrawStageCompleteCommand";
 import {PublishMessageCommand} from "./PublishMessageCommand";
 import {EndDrawStageCommand} from "./EndDrawStageCommand";
 
