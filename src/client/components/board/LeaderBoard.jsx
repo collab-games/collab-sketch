@@ -22,9 +22,9 @@ const Winner = ({ name }) => {
 const Players = ({ players }) => {
 
   const playerList = Object.values(players)
-    .sort((p1, p2) => p2.game.score - p1.game.score)
+    .sort((p1, p2) => p2.score - p1.score)
     .map((player, index) =>
-      <Player key={index} rank={index+1} username={player.game.name} score={player.game.score} />)
+      <Player key={index} rank={index+1} username={player.name} score={player.score} />)
 
   return (
     <div className="leader-board__players">
@@ -66,11 +66,11 @@ class LeaderBoard extends React.Component {
   render() {
     const { players } = this.props;
     const winner = Object.values(players)
-      .sort((p1, p2) => p2.game.score - p1.game.score)[0];
+      .sort((p1, p2) => p2.score - p1.score)[0];
     return (
       <div className="leader-board-container">
         <div className="leader-board">
-          <Winner name={winner.game.name} />
+          <Winner name={winner.name} />
           <div className="leader-board-body">
             <LeaderBoardTitle/>
             <LeaderBoardHeader/>

@@ -99,7 +99,6 @@ class App extends React.Component {
 
   render() {
     let {secret, G, messages} = this.state;
-    console.log('messages in App', messages);
     return (
       <div className="player-container">
         {G ? <CollabSketchBoard
