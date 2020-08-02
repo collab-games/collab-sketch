@@ -7,7 +7,7 @@ import find from 'lodash/find';
 import PropTypes from 'prop-types';
 import Quote from "../Quote";
 import {default as quotes} from "../../quotes.json";
-// import PlayerList from "../PlayerList";
+import PlayerList from "../PlayerList";
 import Spinner from "react-bootstrap/Spinner";
 import './WaitingRoom.css';
 import ShareGame from "../ShareGame";
@@ -86,7 +86,7 @@ class WaitingRoom extends React.Component {
             </Col>
             <Col style={{paddingRight: 0}} md={{span: 2}}>
               <div>
-                {/*<PlayerList G={G} players={this.getActivePlayers()} currentPlayerId={player.id}/>*/}
+                <PlayerList G={G} players={this.getActivePlayers()} currentPlayerId={player.id}/>
               </div>
             </Col>
           </Row>
