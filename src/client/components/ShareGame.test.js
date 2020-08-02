@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import {shallow} from "enzyme";
 import ShareGame from "./ShareGame";
 import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component";
 import {BsUnion} from "react-icons/bs";

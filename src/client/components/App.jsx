@@ -26,7 +26,7 @@ class App extends React.Component {
 
   updateMessage(message) {
     const messages = this.state.messages.concat(message);
-    this.setState({ messages });
+    this.setState({messages});
   }
 
   updateState(state) {

@@ -23,14 +23,14 @@ class CanvasOne extends React.Component {
   }
 
   isCanvasOneArtist() {
-    const { player } = this.props;
+    const {player} = this.props;
     return player.stage === Stage.DRAW_CANVAS_ONE
   }
 
   renderFirstWord() {
-    const { G } = this.props;
+    const {G} = this.props;
     return <div className="word">
-      { this.isCanvasOneArtist()
+      {this.isCanvasOneArtist()
         ? <p>You're drawing <span className="reveal">{G.canvasOne.word}</span></p>
         : <span className="conceal">{repeat('_ ', G.canvasOne.chars)}</span>
       }
@@ -38,7 +38,7 @@ class CanvasOne extends React.Component {
   }
 
   artistName() {
-    const { G } = this.props;
+    const {G} = this.props;
     const player = firstCanvasPlayerFrom(G.players);
     return player ? player.name : null;
   }
@@ -51,8 +51,8 @@ class CanvasOne extends React.Component {
     const {G} = this.props;
     return (
       <div className="canvas-container">
-        { !isChoosingStage(G.players) && this.renderFirstWord() }
-        {this.isCanvasOneArtist() && <Canvas data={G.canvasOne.data} updateCanvas={this.updateCanvas} /> }
+        {!isChoosingStage(G.players) && this.renderFirstWord()}
+        {this.isCanvasOneArtist() && <Canvas data={G.canvasOne.data} updateCanvas={this.updateCanvas}/>}
         {!this.isCanvasOneArtist() && <ReadOnlyCanvas
           data={G.canvasOne.data}
           artistName={this.artistName()}

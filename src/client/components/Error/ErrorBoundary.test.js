@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from 'enzyme';
+import {shallow} from 'enzyme';
 import ErrorBoundary from "./ErrorBoundary";
 
 describe('<ErrorBoundary>', function () {
@@ -14,7 +14,7 @@ describe('<ErrorBoundary>', function () {
 
     const component = shallow(
       <ErrorBoundary>
-        <FooComponent />
+        <FooComponent/>
       </ErrorBoundary>
     );
 
@@ -25,7 +25,7 @@ describe('<ErrorBoundary>', function () {
 
     const component = shallow(
       <ErrorBoundary>
-        <FooComponent />
+        <FooComponent/>
       </ErrorBoundary>
     );
 

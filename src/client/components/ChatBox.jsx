@@ -22,7 +22,7 @@ class ChatBox extends React.Component {
     this.sendMessage = this.sendMessage.bind(this);
   }
 
-  changeInputValue (e) {
+  changeInputValue(e) {
     this.setState({
       message: e.target.value
     });
@@ -30,8 +30,8 @@ class ChatBox extends React.Component {
 
   sendMessage(event) {
     if (event.key === 'Enter' && !isEmpty(this.state.message.trim())) {
-      const { message } = this.state;
-      const { sendMessage, isPlayerGuessing } = this.props;
+      const {message} = this.state;
+      const {sendMessage, isPlayerGuessing} = this.props;
       isPlayerGuessing && sendMessage('guess', message);
       this.setState({
         message: ''
@@ -41,13 +41,15 @@ class ChatBox extends React.Component {
 
   renderMessages() {
     const renderMessage = (message, index) => {
-      if(message.type === MessageType.REVEAL) {
+      if (message.type === MessageType.REVEAL) {
         return <p key={index} className="chat-box__message__system">
-          {message.author} were drawing <span className="word">{message.text}</span> <span className="score"> [+{message.score}]</span>
+          {message.author} were drawing <span className="word">{message.text}</span> <span
+          className="score"> [+{message.score}]</span>
         </p>
-      } else if(message.type === MessageType.GUESSED) {
+      } else if (message.type === MessageType.GUESSED) {
         return <p key={index} className="chat-box__message__system">
-          <span className="author">{message.author}</span> has guessed it correct <span className="score">[+{message.score}]</span>
+          <span className="author">{message.author}</span> has guessed it correct <span
+          className="score">[+{message.score}]</span>
         </p>
       } else {
         return <p key={index} className="chat-box__message__player">
@@ -56,12 +58,12 @@ class ChatBox extends React.Component {
         </p>
       }
     };
-    const { messages } = this.props;
-    return messages.map( (message, index) => renderMessage(message, index));
+    const {messages} = this.props;
+    return messages.map((message, index) => renderMessage(message, index));
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(prevProps !== this.props) {
+    if (prevProps !== this.props) {
       const chatLog = document.querySelector('.chat-box__messages');
       chatLog.scrollTop = chatLog.scrollHeight;
     }
@@ -74,7 +76,8 @@ class ChatBox extends React.Component {
           {this.renderMessages()}
         </div>
         <div className="chat-box__input">
-          <input value={this.state.message} placeholder="Guess here" onChange={this.changeInputValue} onKeyPress={this.sendMessage}/>
+          <input value={this.state.message} placeholder="Guess here" onChange={this.changeInputValue}
+                 onKeyPress={this.sendMessage}/>
         </div>
       </div>
     );

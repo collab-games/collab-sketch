@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from 'enzyme';
+import {shallow} from 'enzyme';
 import ChooseModal from "./ChooseModal/ChooseModal";
 import PlayArea from "./PlayArea";
 
@@ -17,8 +17,10 @@ describe('<PlayArea>', function () {
     }
   };
   const moves = {
-    chooseWords: () => {},
-    choosePlayer: () => {}
+    chooseWords: () => {
+    },
+    choosePlayer: () => {
+    }
   };
   const defaultProps = {
     G: G,

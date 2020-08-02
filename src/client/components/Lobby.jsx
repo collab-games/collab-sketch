@@ -16,17 +16,17 @@ class Lobby extends React.Component {
   }
 
   joinRoomAction = ({playerName}) => {
-    this.setState({ playerName: playerName, isCardFlipped: true });
+    this.setState({playerName: playerName, isCardFlipped: true});
   };
 
   render() {
-    const { isCardFlipped, playerName } = this.state;
-    const { gameId } = this.props;
+    const {isCardFlipped, playerName} = this.state;
+    const {gameId} = this.props;
     return (
       <div>
         <div className="turn-in-card">
           <ReactCardFlip isFlipped={isCardFlipped}>
-            <CardFront joinRoomAction={this.joinRoomAction} createRoom={this.props.createRoom} />
+            <CardFront joinRoomAction={this.joinRoomAction} createRoom={this.props.createRoom}/>
             <CardBack gameId={gameId} playerName={playerName} joinRoom={this.props.joinRoom}/>
           </ReactCardFlip>
         </div>

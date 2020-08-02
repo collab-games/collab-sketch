@@ -46,9 +46,9 @@ class Navigation extends React.Component {
 
   startGame(event) {
     event.preventDefault();
-      if (this.canStartGame()) {
-        this.props.sendMessage('start-game');
-      }
+    if (this.canStartGame()) {
+      this.props.sendMessage('start-game');
+    }
   }
 
   endGame(event) {
@@ -58,57 +58,57 @@ class Navigation extends React.Component {
 
   renderStartGame() {
     return (
-        <OverlayTrigger
-          placement="bottom"
-          overlay={ this.canStartGame()
-            ? <Tooltip id="start-game-hint"> Click to Start Game!</Tooltip>
-            : <Tooltip id="start-game-hint"> Minimum 3 players required!</Tooltip> }
-          delay={{ show: 100, hide: 1000 }}
+      <OverlayTrigger
+        placement="bottom"
+        overlay={this.canStartGame()
+          ? <Tooltip id="start-game-hint"> Click to Start Game!</Tooltip>
+          : <Tooltip id="start-game-hint"> Minimum 3 players required!</Tooltip>}
+        delay={{show: 100, hide: 1000}}
+      >
+        <Button
+          disabled={!this.canStartGame()}
+          variant="warning"
+          className="nav-button"
+          onClick={this.startGame}
         >
-          <Button
-            disabled={!this.canStartGame()}
-            variant="warning"
-            className="nav-button"
-            onClick={this.startGame}
-          >
-            Start Game <FaPlayCircle className="icon" />
-          </Button>
-        </OverlayTrigger>
-      );
+          Start Game <FaPlayCircle className="icon"/>
+        </Button>
+      </OverlayTrigger>
+    );
   }
 
   renderEndGame() {
     return (
-        <Button
-          variant="warning"
-          className="nav-button end-game-button"
-          onClick={this.endGame}
-        >
-          End Game <IoMdClose className="icon" />
-        </Button>
+      <Button
+        variant="warning"
+        className="nav-button end-game-button"
+        onClick={this.endGame}
+      >
+        End Game <IoMdClose className="icon"/>
+      </Button>
     );
   }
 
   renderTimer() {
     const {G} = this.props;
     return isChoosingStage(G.players)
-      ? <SelectionTimer G={G} />
-      : <TurnTimer G={G} />
+      ? <SelectionTimer G={G}/>
+      : <TurnTimer G={G}/>
   }
 
   render() {
-    const { player, G: { status, settings, turn } } = this.props;
-      return (
-        <nav className="navbar navigation">
-          <NavbarBrand href="/">Collab Sketch</NavbarBrand>
-          {status === GameStatus.STARTED && this.renderTimer()}
-          <Form inline>
-            <div className="round"><GiCheckeredFlag className="icon" /> {`${turn.round}/${settings.numOfRounds}`} </div>
-            {status === GameStatus.WAITING && this.isAdmin(player.id) && this.renderStartGame()}
-            {status === GameStatus.STARTED && this.isAdmin(player.id) && this.renderEndGame()}
-          </Form>
-        </nav>
-      );
+    const {player, G: {status, settings, turn}} = this.props;
+    return (
+      <nav className="navbar navigation">
+        <NavbarBrand href="/">Collab Sketch</NavbarBrand>
+        {status === GameStatus.STARTED && this.renderTimer()}
+        <Form inline>
+          <div className="round"><GiCheckeredFlag className="icon"/> {`${turn.round}/${settings.numOfRounds}`} </div>
+          {status === GameStatus.WAITING && this.isAdmin(player.id) && this.renderStartGame()}
+          {status === GameStatus.STARTED && this.isAdmin(player.id) && this.renderEndGame()}
+        </Form>
+      </nav>
+    );
   }
 }
 

@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
-import {IoIosAddCircle,IoIosLogIn } from 'react-icons/io';
+import {IoIosAddCircle, IoIosLogIn} from 'react-icons/io';
 import starryNightImg from 'public/starry_night.jpg';
 
 class CardFront extends React.Component {
@@ -19,10 +19,10 @@ class CardFront extends React.Component {
     this.onPlayerNameChange = this.onPlayerNameChange.bind(this);
   }
 
-  onCreateRoomClick = async(e) => {
+  onCreateRoomClick = async (e) => {
     e.preventDefault();
-    if(this.state.playerName.trim().length <= 0) {
-      this.setState({ inputError: true})
+    if (this.state.playerName.trim().length <= 0) {
+      this.setState({inputError: true})
       return;
     }
     const playerName = this.state.playerName;
@@ -31,12 +31,12 @@ class CardFront extends React.Component {
 
   onJoinRoomClick = (e) => {
     e.preventDefault();
-    if(this.state.playerName.trim().length <= 0) {
-      this.setState({ inputError: true})
+    if (this.state.playerName.trim().length <= 0) {
+      this.setState({inputError: true})
       return;
     }
     const playerName = this.state.playerName;
-    this.props.joinRoomAction({ playerName: playerName });
+    this.props.joinRoomAction({playerName: playerName});
   };
 
   onPlayerNameChange = (target) => {
@@ -48,10 +48,10 @@ class CardFront extends React.Component {
   };
 
   render() {
-    const { inputError } = this.state;
-    return(
+    const {inputError} = this.state;
+    return (
       <Card>
-        <Card.Img variant="top" src={starryNightImg} />
+        <Card.Img variant="top" src={starryNightImg}/>
         <Card.Body>
           <Row className="card-row">
             <InputGroup className="mb-3">
@@ -62,7 +62,7 @@ class CardFront extends React.Component {
               </InputGroup.Prepend>
               <FormControl
                 autoFocus
-                className={`player-name ${inputError?"error":""}`}
+                className={`player-name ${inputError ? "error" : ""}`}
                 id="card-front"
                 aria-describedby="basic-addon3"
                 onChange={this.onPlayerNameChange}
@@ -72,20 +72,20 @@ class CardFront extends React.Component {
             </InputGroup>
           </Row>
           <Row className="card-row">
-              <Button
-                  className="create-room-btn"
-                  variant="success"
-                  size="lg"
-                  onClick={this.onCreateRoomClick}>
-                Create Room <IoIosAddCircle className="icon" />
-              </Button>
-              <Button
-                  className="join-room-btn"
-                  variant="warning"
-                  size="lg"
-                  onClick={this.onJoinRoomClick}>
-                Join Room <IoIosLogIn className="icon" />
-              </Button>
+            <Button
+              className="create-room-btn"
+              variant="success"
+              size="lg"
+              onClick={this.onCreateRoomClick}>
+              Create Room <IoIosAddCircle className="icon"/>
+            </Button>
+            <Button
+              className="join-room-btn"
+              variant="warning"
+              size="lg"
+              onClick={this.onJoinRoomClick}>
+              Join Room <IoIosLogIn className="icon"/>
+            </Button>
           </Row>
         </Card.Body>
       </Card>

@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from 'enzyme';
+import {shallow} from 'enzyme';
 import Button from "react-bootstrap/Button";
 import ChooseWords from "./ChooseWords";
 
@@ -7,7 +7,7 @@ describe('<ChooseWords>', function () {
   it('should render words', function () {
     const words = ["word1", "word2", "word3"];
     const component = shallow(
-      <ChooseWords words={words} chooseWord={jest.fn()} />
+      <ChooseWords words={words} chooseWord={jest.fn()}/>
     );
 
     const buttons = component.find(Button);
@@ -21,7 +21,7 @@ describe('<ChooseWords>', function () {
     const words = ["hello world", "air cooler"];
     const chooseWordFn = jest.fn();
     const component = shallow(
-      <ChooseWords words={words} chooseWord={chooseWordFn} />
+      <ChooseWords words={words} chooseWord={chooseWordFn}/>
     );
 
     const buttons = component.find(Button);
@@ -35,7 +35,7 @@ describe('<ChooseWords>', function () {
     const words = ["hello world", "air cooler"];
     const chooseWordFn = jest.fn();
     const component = shallow(
-      <ChooseWords words={words} chooseWord={chooseWordFn} />
+      <ChooseWords words={words} chooseWord={chooseWordFn}/>
     );
 
     const buttons = component.find(Button);

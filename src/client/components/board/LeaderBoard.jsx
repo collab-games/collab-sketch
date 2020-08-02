@@ -11,7 +11,7 @@ const LeaderBoardTitle = () => {
   )
 };
 
-const Winner = ({ name }) => {
+const Winner = ({name}) => {
   return (
     <div className="winner">
       <h2>🎉 Congratulations {name}🎉 </h2>
@@ -19,12 +19,12 @@ const Winner = ({ name }) => {
   )
 };
 
-const Players = ({ players }) => {
+const Players = ({players}) => {
 
   const playerList = Object.values(players)
     .sort((p1, p2) => p2.score - p1.score)
     .map((player, index) =>
-      <Player key={index} rank={index+1} username={player.name} score={player.score} />)
+      <Player key={index} rank={index + 1} username={player.name} score={player.score}/>)
 
   return (
     <div className="leader-board__players">
@@ -36,14 +36,14 @@ const Players = ({ players }) => {
 const LeaderBoardHeader = () => {
   return (
     <div className="leader-board__header">
-        <h4 className="rank">#</h4>
-        <h4>Name</h4>
-        <h4>Score</h4>
+      <h4 className="rank">#</h4>
+      <h4>Name</h4>
+      <h4>Score</h4>
     </div>
   )
 };
 
-const Player = ({ rank, username, score }) => {
+const Player = ({rank, username, score}) => {
   return (
     <div className="leader-board__player">
       <h4 className="rank">{rank}</h4>
@@ -64,24 +64,23 @@ class LeaderBoard extends React.Component {
   }
 
   render() {
-    const { players } = this.props;
+    const {players} = this.props;
     const winner = Object.values(players)
       .sort((p1, p2) => p2.score - p1.score)[0];
     return (
       <div className="leader-board-container">
         <div className="leader-board">
-          <Winner name={winner.name} />
+          <Winner name={winner.name}/>
           <div className="leader-board-body">
             <LeaderBoardTitle/>
             <LeaderBoardHeader/>
-            <Players players={players} />
+            <Players players={players}/>
           </div>
         </div>
       </div>
     );
   }
 }
-
 
 
 export default LeaderBoard;

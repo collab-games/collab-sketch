@@ -27,7 +27,7 @@ class ChooseModal extends React.Component {
         <ModalBody className="modal-outline">
           {isEmpty(words)
             ? <ChoosePlayer sendMessage={sendMessage} players={players} currentPlayerId={currentPlayerId}/>
-            : <ChooseWords words={words} sendMessage={sendMessage} />
+            : <ChooseWords words={words} sendMessage={sendMessage}/>
           }
         </ModalBody>
       </Modal>

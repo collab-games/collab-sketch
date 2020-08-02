@@ -1,115 +1,115 @@
 @import "src/client/variables";
 
 .leader-board-container {
-    background: linear-gradient(rgba(white, 0.85), rgba(white, 0.85)), url("/public/leader-board-bg.jpg");
+  background: linear-gradient(rgba(white, 0.85), rgba(white, 0.85)), url("/public/leader-board-bg.jpg");
+  height: $content-height;
+
+  & .leader-board {
     height: $content-height;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
 
-    & .leader-board {
-        height: $content-height;
-        display: flex;
-        justify-content: flex-start;
-        flex-direction: column;
-        align-items: center;
+    & .winner {
+      padding-top: 5vh;
+      padding-bottom: 2vh;
+      display: flex;
+      justify-content: center;
 
-        & .winner {
-            padding-top: 5vh;
-            padding-bottom: 2vh;
-            display: flex;
-            justify-content: center;
-
-            & h2 {
-                font-family: "Montserrat", sans-serif;
-                color: $brand-color-primary;
-                font-weight: bold;
-                background-color: rgba(white, 0.7);
-                border-radius: 1rem;
-            }
-        }
-
-        & .leader-board-body {
-            width: 40vw;
-            border-radius: 0.5rem;
-            -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-            -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-            box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-        }
+      & h2 {
+        font-family: "Montserrat", sans-serif;
+        color: $brand-color-primary;
+        font-weight: bold;
+        background-color: rgba(white, 0.7);
+        border-radius: 1rem;
+      }
     }
+
+    & .leader-board-body {
+      width: 40vw;
+      border-radius: 0.5rem;
+      -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+      -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+      box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    }
+  }
 }
 
 .leader-board-body {
 
-    & .leader-board__title {
-        height: 4rem;
-        background-color: $brand-color-primary;
-        border-radius: 0.5rem 0.5rem 0 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+  & .leader-board__title {
+    height: 4rem;
+    background-color: $brand-color-primary;
+    border-radius: 0.5rem 0.5rem 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-        & h2 {
-            margin: 0;
-            color: #fefefe;
-            font-size: 2rem;
-            font-family: "Montserrat", sans-serif;
-            font-weight:bold;
-        }
+    & h2 {
+      margin: 0;
+      color: #fefefe;
+      font-size: 2rem;
+      font-family: "Montserrat", sans-serif;
+      font-weight: bold;
+    }
+  }
+
+  & .leader-board__header {
+    display: flex;
+    align-items: center;
+    background: rgba(254, 254, 254, 0.9);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    height: 3rem;
+
+    & h4 {
+      width: 15vw;
+      font-size: 1.5rem;
+      font-family: "Montserrat", sans-serif;
+      font-weight: bold;
+      text-align: center;
     }
 
-    & .leader-board__header {
-        display: flex;
-        align-items: center;
-        background: rgba(254, 254, 254, 0.9);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-        height: 3rem;
+    & h4.rank {
+      width: 10vw;
+    }
+  }
 
-        & h4 {
-            width: 15vw;
-            font-size: 1.5rem;
-            font-family: "Montserrat", sans-serif;
-            font-weight:bold;
-            text-align: center;
-        }
+  & .leader-board__players {
+    width: 40vw;
+    max-height: 50vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 
-        & h4.rank {
-            width: 10vw;
-        }
+    & .leader-board__player {
+      display: flex;
+      align-items: center;
+      background: #fefefe;
+      height: 3rem;
+
+      & h4 {
+        font-family: "Montserrat", sans-serif;
+        width: 15vw;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      & h4.rank {
+        width: 10vw;
+      }
     }
 
-    & .leader-board__players {
-        width: 40vw;
-        max-height: 50vh;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-
-        & .leader-board__player {
-            display: flex;
-            align-items: center;
-            background: #fefefe;
-            height: 3rem;
-
-            & h4 {
-                font-family: "Montserrat", sans-serif;
-                width: 15vw;
-                text-align: center;
-                font-weight: bold;
-            }
-
-            & h4.rank {
-                width: 10vw;
-            }
-        }
-
-        & .leader-board__player:nth-of-type(odd) {
-            background: rgba(254, 254, 254, 0.9);
-        }
-
-        & .leader-board__player:nth-of-type(even) {
-            background: rgba(240, 240, 240, 0.9);
-        }
-
-        & .leader-board__player:last-child {
-            border-radius: 0 0 0.5rem 0.5rem;
-        }
+    & .leader-board__player:nth-of-type(odd) {
+      background: rgba(254, 254, 254, 0.9);
     }
+
+    & .leader-board__player:nth-of-type(even) {
+      background: rgba(240, 240, 240, 0.9);
+    }
+
+    & .leader-board__player:last-child {
+      border-radius: 0 0 0.5rem 0.5rem;
+    }
+  }
 }

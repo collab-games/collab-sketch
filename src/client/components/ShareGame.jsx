@@ -22,11 +22,11 @@ class ShareGame extends React.Component {
   }
 
   onCopyToClipboard() {
-    this.setState({ copied: true });
+    this.setState({copied: true});
   }
 
   render() {
-    const { gameID, size } = this.props;
+    const {gameID, size} = this.props;
     const gameUrl = `${window.location.origin}/${gameID}`;
     return (
       <div className="share-info">
@@ -34,14 +34,15 @@ class ShareGame extends React.Component {
         <div className="clipboard">
           <OverlayTrigger
             placement="right"
-            delay={{ show: 250, hide: 400 }}
-            overlay={this.state.copied ? <Tooltip id="button-tooltip">Copied!</Tooltip>: <Tooltip id="button-tooltip">Click to Copy!</Tooltip>}
+            delay={{show: 250, hide: 400}}
+            overlay={this.state.copied ? <Tooltip id="button-tooltip">Copied!</Tooltip> :
+              <Tooltip id="button-tooltip">Click to Copy!</Tooltip>}
           >
             <CopyToClipboard
               text={gameUrl}
               onCopy={this.onCopyToClipboard}
             >
-              <BsUnion size={size} color="#495057" />
+              <BsUnion size={size} color="#495057"/>
             </CopyToClipboard>
           </OverlayTrigger>
         </div>

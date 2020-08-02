@@ -1,23 +1,23 @@
 @import "src/client/variables";
 
 .svg-container {
-    display: block;
-    width: 40vw;
-    border: 2px solid #caccd1;
-    height: 88vh;
-    background-color: #ffffff;
+  display: block;
+  width: 40vw;
+  border: 2px solid #caccd1;
+  height: 88vh;
+  background-color: #ffffff;
 }
 
 .svg-container img {
-    max-width: 100%;
-    max-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .read-only-canvas__artist-name {
-    position: absolute;
-    color: $color-dark;
-    background-color: #aaaaaa;
-    padding: 5px;
-    border-bottom-right-radius: 5px;
-    font-size: 1rem;
+  position: absolute;
+  color: $color-dark;
+  background-color: #aaaaaa;
+  padding: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: 1rem;
 }

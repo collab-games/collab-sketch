@@ -45,9 +45,11 @@
         font-weight: bold;
         font-variant: all-small-caps;
       }
+
       & span:after {
         content: ": ";
       }
+
       font-size: 1.2rem;
     }
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import UIfx from 'uifx';
 import {FaTrophy} from 'react-icons/fa';
 import './PlayerList.scss';
-import { GameStatus } from "../../common/constants";
+import {GameStatus} from "../../common/constants";
 import {playerFrom} from "../../common/players";
 
 class PlayerList extends React.Component {
@@ -21,7 +21,7 @@ class PlayerList extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { G, players, currentPlayerId } = this.props;
+    const {G, players, currentPlayerId} = this.props;
 
     if (G.state === GameStatus.STARTED) {
 
@@ -29,11 +29,11 @@ class PlayerList extends React.Component {
       const previousScore = playerFrom(prevProps.players, currentPlayerId).score;
 
       if (currentScore > previousScore) {
-          this.correctGuessTone.play();
+        this.correctGuessTone.play();
       }
 
       const othersGuessed = Object.values(players)
-        .find( player => ((player.id !== currentPlayerId) && player.score > playerFrom(prevProps.players, player.id).score));
+        .find(player => ((player.id !== currentPlayerId) && player.score > playerFrom(prevProps.players, player.id).score));
 
       if (othersGuessed) {
         this.otherGuessTone.play();
@@ -46,17 +46,17 @@ class PlayerList extends React.Component {
   }
 
   renderPlayers() {
-    const { players, G: { turn: { guessedPlayers } } } = this.props;
+    const {players, G: {turn: {guessedPlayers}}} = this.props;
 
     return Object.values(players)
       .sort((p1, p2) => p2.score - p1.score)
       .map((player, index) =>
         <ListGroup.Item
           key={index}
-          className={this.isCurrentPlayer(player.id)?"current":""}
-          variant={(guessedPlayers.includes(player.id)) ? 'success' :''}
+          className={this.isCurrentPlayer(player.id) ? "current" : ""}
+          variant={(guessedPlayers.includes(player.id)) ? 'success' : ''}
         >
-          <span >{player.name}</span>
+          <span>{player.name}</span>
           <span className="score">{player.score}</span>
         </ListGroup.Item>);
   }
@@ -64,7 +64,8 @@ class PlayerList extends React.Component {
   render() {
     return (
       <section id="leader-board">
-        <h2 className="players-list__header"> <FaTrophy className="icon"/> <span>Leader Board</span> <FaTrophy className="icon"/> </h2>
+        <h2 className="players-list__header"><FaTrophy className="icon"/> <span>Leader Board</span> <FaTrophy
+          className="icon"/></h2>
         <ListGroup className="players-list">
           {this.renderPlayers()}
         </ListGroup>

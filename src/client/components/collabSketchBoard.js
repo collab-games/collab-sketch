@@ -32,7 +32,7 @@ class CollabSketchBoard extends React.Component {
         return <PlayBoard G={G} sendMessage={this.props.sendMessage} player={player} messages={messages}/>;
 
       case GameStatus.ENDED:
-          return <LeaderBoard players={G.players} />;
+        return <LeaderBoard players={G.players}/>;
 
       default:
         return null;

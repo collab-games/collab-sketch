@@ -38,7 +38,7 @@ class WaitingRoom extends React.Component {
   }
 
   getAdminPlayer() {
-    return find(this.props.G.players, ['id',0]);
+    return find(this.props.G.players, ['id', 0]);
   }
 
   adminName() {
@@ -50,24 +50,24 @@ class WaitingRoom extends React.Component {
       <Container className="waiting-info">
         <Row className="text-center">
           <Col>
-          <Spinner animation="grow"  size="sm"/>
-          <Spinner animation="grow"  size="sm"/>
-          <Spinner animation="grow" size="sm"/>
-          <Spinner animation="grow" size="sm"/>
+            <Spinner animation="grow" size="sm"/>
+            <Spinner animation="grow" size="sm"/>
+            <Spinner animation="grow" size="sm"/>
+            <Spinner animation="grow" size="sm"/>
           </Col>
         </Row>
         <Row className="text-center">
           <Col>
-          <p className="waiting-text">Waiting for { this.adminName() } to start the Game !!</p>
+            <p className="waiting-text">Waiting for {this.adminName()} to start the Game !!</p>
           </Col>
         </Row>
       </Container>
-      )
+    )
   }
 
   render() {
     const {G, player, gameID} = this.props;
-    const { quote } = this.state;
+    const {quote} = this.state;
     return (
       <div>
         <Container fluid={true}>
@@ -81,7 +81,7 @@ class WaitingRoom extends React.Component {
               </Row>
               <Row className="share-info-container">
                 <label> Invite your friends:</label>
-                <ShareGame gameID={gameID} size={30} />
+                <ShareGame gameID={gameID} size={30}/>
               </Row>
             </Col>
             <Col style={{paddingRight: 0}} md={{span: 2}}>

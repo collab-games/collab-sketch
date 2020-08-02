@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from 'enzyme';
+import {shallow} from 'enzyme';
 import CanvasOne from "./CanvasOne";
 import ReadOnlyCanvas from "./ReadOnlyCanvas";
 import Canvas from "./Canvas";
@@ -22,14 +22,17 @@ describe('<CanvasOne>', function () {
     }
   };
   const moves = {
-    guessArt: () => {},
-    endTurn: () => {},
-    updateSnapshotForCanvasOne: () => {}
+    guessArt: () => {
+    },
+    endTurn: () => {
+    },
+    updateSnapshotForCanvasOne: () => {
+    }
   };
 
   it('should render read only canvas if current player is not drawing', function () {
     const component = shallow(
-      <CanvasOne isActive={true} playerID='0' G={G} ctx={ctx} moves={moves} />
+      <CanvasOne isActive={true} playerID='0' G={G} ctx={ctx} moves={moves}/>
     );
 
     const readOnlyCanvas = component.find(ReadOnlyCanvas);
@@ -40,7 +43,7 @@ describe('<CanvasOne>', function () {
 
   it('should render Grid canvas if current player is canvas one artist', function () {
     const component = shallow(
-      <CanvasOne isActive={true} playerID='1' G={G} ctx={ctx} moves={moves} />
+      <CanvasOne isActive={true} playerID='1' G={G} ctx={ctx} moves={moves}/>
     );
 
     const canvasGrid = component.find(Canvas);
@@ -51,7 +54,7 @@ describe('<CanvasOne>', function () {
 
   it('should not render Grid canvas if current player is canvas two artist', function () {
     const component = shallow(
-      <CanvasOne isActive={true} playerID='2' G={G} ctx={ctx} moves={moves} />
+      <CanvasOne isActive={true} playerID='2' G={G} ctx={ctx} moves={moves}/>
     );
 
     const canvasGrid = component.find(Canvas);
@@ -60,7 +63,7 @@ describe('<CanvasOne>', function () {
 
   it('should render drawing word if player is canvas one artist', function () {
     const component = shallow(
-      <CanvasOne isActive={true} playerID='1' G={G} ctx={ctx} moves={moves} />
+      <CanvasOne isActive={true} playerID='1' G={G} ctx={ctx} moves={moves}/>
     );
 
     expect(component.find('.word').text()).toContain(G.word);
@@ -68,7 +71,7 @@ describe('<CanvasOne>', function () {
 
   it('should render blanks if player is not canvas two artist', function () {
     const component = shallow(
-      <CanvasOne isActive={true} playerID='2' G={G} ctx={ctx} moves={moves} />
+      <CanvasOne isActive={true} playerID='2' G={G} ctx={ctx} moves={moves}/>
     );
 
     expect(component.find('.word').text()).toEqual(repeat('_ ', G.canvasOne['chars']));
@@ -76,7 +79,7 @@ describe('<CanvasOne>', function () {
 
   it('should render blanks if player is not drawing', function () {
     const component = shallow(
-      <CanvasOne isActive={true} playerID='0' G={G} ctx={ctx} moves={moves} />
+      <CanvasOne isActive={true} playerID='0' G={G} ctx={ctx} moves={moves}/>
     );
 
     expect(component.find('.word').text()).toEqual(repeat('_ ', G.canvasOne['chars']));

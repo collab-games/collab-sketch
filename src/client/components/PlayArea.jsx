@@ -82,7 +82,7 @@ class PlayArea extends React.Component {
             <div className="sidebar">
               <PlayerList G={G} players={this.getActivePlayers()} currentPlayerId={player.id}/>
               <ChatBox sendMessage={sendMessage} currentPlayer={player}
-                       isPlayerGuessing={this.isPlayerGuessing()} messages={messages} />
+                       isPlayerGuessing={this.isPlayerGuessing()} messages={messages}/>
             </div>
           </Col>
         </Row>

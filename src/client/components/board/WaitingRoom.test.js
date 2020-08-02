@@ -8,7 +8,7 @@ import ShareGame from "./ShareGame";
 describe('<WaitingRoom>', function () {
 
   it('should wait for admin to start the game', () => {
-    const G = { players: {'0': { game: { name: 'James' }}, '1': {}, '2': {}} };
+    const G = {players: {'0': {game: {name: 'James'}}, '1': {}, '2': {}}};
     const startGame = jest.fn();
     const component = shallow(<WaitingRoom isActive={true} startGame={startGame} playerID={'1'} G={G}/>);
 
@@ -17,7 +17,7 @@ describe('<WaitingRoom>', function () {
 
   it('should show players', () => {
     const startGame = jest.fn();
-    const G = { players: {'0': {}, '1': {}, '2': {}} };
+    const G = {players: {'0': {}, '1': {}, '2': {}}};
     const component = shallow(<WaitingRoom isActive={true} startGame={startGame} playerID={'0'} G={G}/>);
 
     const playerList = component.find(PlayerList);
@@ -27,7 +27,7 @@ describe('<WaitingRoom>', function () {
   });
 
   it('should show quote for admin', () => {
-    const G = { players: {'0': {}, '1': {}, '2': {}} };
+    const G = {players: {'0': {}, '1': {}, '2': {}}};
     const startGame = jest.fn();
     const component = shallow(<WaitingRoom isActive={true} startGame={startGame} playerID={'0'} G={G}/>);
 
@@ -36,7 +36,7 @@ describe('<WaitingRoom>', function () {
   });
 
   it('should show quote for players who are not admin', () => {
-    const G = { players: {'0': {}, '1': {}, '2': {}} };
+    const G = {players: {'0': {}, '1': {}, '2': {}}};
     const startGame = jest.fn();
     const component = shallow(<WaitingRoom isActive={true} startGame={startGame} playerID={'0'} G={G}/>);
 
@@ -45,9 +45,10 @@ describe('<WaitingRoom>', function () {
   });
 
   it('should show information for sharing room', () => {
-    const G = { players: {'0': {}, '1': {}, '2': {}} };
+    const G = {players: {'0': {}, '1': {}, '2': {}}};
     const startGame = jest.fn();
-    const component = shallow(<WaitingRoom isActive={true} startGame={startGame} playerID={'0'} G={G} gameID={'xf3dxf'}/>);
+    const component = shallow(<WaitingRoom isActive={true} startGame={startGame} playerID={'0'} G={G}
+                                           gameID={'xf3dxf'}/>);
 
     const shareGame = component.find(ShareGame);
     expect(shareGame.props().gameID).toBe('xf3dxf');

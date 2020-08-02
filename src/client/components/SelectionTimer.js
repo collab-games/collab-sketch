@@ -24,19 +24,19 @@ class SelectionTimer extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.G.turn.selectionStartTime > prevState.serverTime) {
-      return { serverTime: nextProps.G.turn.selectionStartTime};
+      return {serverTime: nextProps.G.turn.selectionStartTime};
     } else return null;
   }
 
   getRemainingTime() {
-    return this.props.G.settings.selectionPeriod - Math.floor((Date.now() - this.state.serverTime)/1000);
+    return this.props.G.settings.selectionPeriod - Math.floor((Date.now() - this.state.serverTime) / 1000);
   }
 
   componentDidMount() {
     const remainingTime = this.getRemainingTime();
     clearInterval(this.timerHandler);
     this.timerHandler = setInterval(() => this.decreaseTimer(), 1000);
-    this.setState({ timer: remainingTime });
+    this.setState({timer: remainingTime});
   }
 
   componentWillUnmount() {
@@ -49,7 +49,7 @@ class SelectionTimer extends React.Component {
       clearInterval(this.timerHandler);
     }
     if (currentTime <= 5) this.timerTick.play();
-    this.setState({ timer: currentTime });
+    this.setState({timer: currentTime});
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -58,7 +58,7 @@ class SelectionTimer extends React.Component {
     if (currentTime > previousTime) {
       clearInterval(this.timerHandler);
       this.timerHandler = setInterval(() => this.decreaseTimer(), 1000);
-      this.setState({ timer: this.getRemainingTime() });
+      this.setState({timer: this.getRemainingTime()});
     }
   }
 
@@ -66,7 +66,7 @@ class SelectionTimer extends React.Component {
     if (this.state.timer > 0) {
       return (
         <div className="count-down-timer">
-          <BsAlarmFill size={20} color="#efdf00" />
+          <BsAlarmFill size={20} color="#efdf00"/>
           <span className="time">
             {this.state.timer}
           </span>

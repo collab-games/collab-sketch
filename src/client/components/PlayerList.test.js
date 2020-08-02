@@ -1,12 +1,12 @@
 import React from "react";
-import { shallow } from "enzyme";
+import {shallow} from "enzyme";
 import PlayerList from "./PlayerList";
 import ListGroup from "react-bootstrap/ListGroup";
 import UIfx from 'uifx';
 import cloneDeep from 'lodash/cloneDeep';
 import {GameState} from "../constants";
 
-  jest.mock('uifx', () => jest.fn())  ;
+jest.mock('uifx', () => jest.fn());
 
 describe('<PlayerList>', function () {
 
@@ -17,9 +17,9 @@ describe('<PlayerList>', function () {
     play = jest.fn();
     UIfx.mockImplementation(() => ({play}));
     players = {
-      '0' : { game: { joined: true, name: 'bond', score: 10 }, turn: { hasGuessed: false }},
-      '1' : { game: { joined: true, name: 'abc', score: 30 }, turn: { hasGuessed: true }},
-      '2' : { game: { joined: true, name: 'def', score: 20 }, turn: { hasGuessed: false }}
+      '0': {game: {joined: true, name: 'bond', score: 10}, turn: {hasGuessed: false}},
+      '1': {game: {joined: true, name: 'abc', score: 30}, turn: {hasGuessed: true}},
+      '2': {game: {joined: true, name: 'def', score: 20}, turn: {hasGuessed: false}}
     };
   });
 
@@ -51,7 +51,7 @@ describe('<PlayerList>', function () {
     const wrapper = shallow(<PlayerList G={{state: GameState.STARTED}} players={players} currentPlayerId={'1'}/>);
     const updatedPlayers = cloneDeep(players);
     updatedPlayers['1'].game.score = 50;
-    wrapper.setProps({ players: updatedPlayers });
+    wrapper.setProps({players: updatedPlayers});
     expect(play).toHaveBeenCalledTimes(1);
   });
 
@@ -59,7 +59,7 @@ describe('<PlayerList>', function () {
     const wrapper = shallow(<PlayerList G={{state: GameState.STARTED}} players={players} currentPlayerId={'1'}/>);
     const updatedPlayers = cloneDeep(players);
     updatedPlayers['2'].game.score = 30;
-    wrapper.setProps({ players: updatedPlayers });
+    wrapper.setProps({players: updatedPlayers});
     expect(play).toHaveBeenCalledTimes(1);
   });
 });

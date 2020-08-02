@@ -30,7 +30,7 @@ class CanvasTwo extends React.Component {
   renderSecondWord() {
     const {G} = this.props;
     return <div className="word">
-      { this.isCanvasTwoArtist()
+      {this.isCanvasTwoArtist()
         ? <p>You're drawing <span className="reveal">{G.canvasTwo.word}</span></p>
         : <span className="conceal">{repeat('_ ', G.canvasTwo.chars)}</span>
       }
@@ -38,7 +38,7 @@ class CanvasTwo extends React.Component {
   }
 
   artistName() {
-    const { G } = this.props;
+    const {G} = this.props;
     const player = secondCanvasPlayerFrom(G.players);
     return player ? player.name : null;
   }
@@ -51,8 +51,8 @@ class CanvasTwo extends React.Component {
     const {G} = this.props;
     return (
       <div className="canvas-container">
-        { !isChoosingStage(G.players) && this.renderSecondWord() }
-        {this.isCanvasTwoArtist() && <Canvas data={G.canvasTwo.data} updateCanvas={this.updateCanvas} /> }
+        {!isChoosingStage(G.players) && this.renderSecondWord()}
+        {this.isCanvasTwoArtist() && <Canvas data={G.canvasTwo.data} updateCanvas={this.updateCanvas}/>}
         {!this.isCanvasTwoArtist() && <ReadOnlyCanvas
           data={G.canvasTwo.data}
           artistName={this.artistName()}

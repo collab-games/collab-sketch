@@ -23,14 +23,14 @@ class TurnTimer extends React.Component {
   }
 
   getRemainingTime() {
-    return this.props.G.settings.turnPeriod - Math.floor((Date.now() - this.state.serverTime)/1000);
+    return this.props.G.settings.turnPeriod - Math.floor((Date.now() - this.state.serverTime) / 1000);
   }
 
   componentDidMount() {
     const remainingTime = this.getRemainingTime();
     clearInterval(this.timerHandler);
     this.timerHandler = setInterval(() => this.decreaseTimer(), 1000);
-    this.setState({ timer: remainingTime });
+    this.setState({timer: remainingTime});
   }
 
   componentWillUnmount() {
@@ -43,14 +43,14 @@ class TurnTimer extends React.Component {
       clearInterval(this.timerHandler);
     }
     if (currentTime <= 5) this.timerTick.play();
-    this.setState({ timer: currentTime });
+    this.setState({timer: currentTime});
   }
 
   renderTimer() {
     if (this.state.timer > 0) {
       return (
         <div className="count-down-timer">
-          <BsAlarmFill color="#efdf00" size={20} />
+          <BsAlarmFill color="#efdf00" size={20}/>
           <span className="time">
             {this.state.timer}
           </span>

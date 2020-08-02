@@ -1,20 +1,20 @@
 import React from "react";
-import { shallow } from 'enzyme';
+import {shallow} from 'enzyme';
 import ChooseModal from "./ChooseModal";
 import Button from "react-bootstrap/Button";
 import ChoosePlayer from "./ChoosePlayer";
 
 describe('<ChoosePlayer>', function () {
   const players = {
-    '0':{game: {name: 'Amar'}, turn: {action: 'choose'}},
-    '1':{game: {name: 'Akbar'}, turn: {action: 'waiting'}},
-    '2':{game: {name: 'Antony'}, turn: {action: 'waiting'}}
+    '0': {game: {name: 'Amar'}, turn: {action: 'choose'}},
+    '1': {game: {name: 'Akbar'}, turn: {action: 'waiting'}},
+    '2': {game: {name: 'Antony'}, turn: {action: 'waiting'}}
   };
 
   const choosePlayerFn = jest.fn();
 
   const component = shallow(
-    <ChoosePlayer choosePlayer={choosePlayerFn} players={players} currentPlayerId={'0'} />
+    <ChoosePlayer choosePlayer={choosePlayerFn} players={players} currentPlayerId={'0'}/>
   );
 
   it('should render only waiting players', function () {

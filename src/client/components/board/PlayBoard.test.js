@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import {shallow} from "enzyme";
 import PlayBoard from "./PlayBoard";
 import PlayArea from "../components/PlayArea";
 import TurnTimer from "../components/TurnTimer";
@@ -15,8 +15,10 @@ describe('<PlayBoard>', function () {
     chooseWords: chooseWords
   };
   const moves = {
-    chooseWords: () => {},
-    choosePlayer: () => {}
+    chooseWords: () => {
+    },
+    choosePlayer: () => {
+    }
   };
   const defaultProps = {
     G: G,
