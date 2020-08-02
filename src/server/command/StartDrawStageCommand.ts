@@ -1,7 +1,7 @@
 import {Command} from "@colyseus/command";
 import {State} from "../state/State";
 import {Stage} from "../../common/constants";
-import {OnDrawStageCompleteCommand} from "./OnDrawStageCompleteCommand";
+import {EndDrawStageCommand} from "./EndDrawStageCommand";
 
 export class StartDrawStageCommand extends Command<State, {}> {
     execute(): void {
@@ -10,7 +10,7 @@ export class StartDrawStageCommand extends Command<State, {}> {
         // @ts-ignore
         this.room.delayedInterval = this.clock.setTimeout((() => {
             // @ts-ignore
-            this.room.dispatcher.dispatch(new OnDrawStageCompleteCommand().setPayload({}));
+            this.room.dispatcher.dispatch(new EndDrawStageCommand().setPayload({}));
         }).bind(this), 75000);
 
     }

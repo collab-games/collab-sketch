@@ -17,7 +17,7 @@ export class StartSelectionStageCommand extends Command<State, { playerId: numbe
             const playerId = nextChoosePlayer(this.state.players);
             resetStages(this.state.players);
             // @ts-ignore
-            this.room.dispatcher.dispatch(new StartSelectionStageCommand().setPayload({ playerId }));
+            this.room.dispatcher.dispatch(new StartSelectionStageCommand().setPayload({playerId}));
         }).bind(this), 15000);
     }
 }

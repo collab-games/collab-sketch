@@ -14,10 +14,10 @@ export class Canvas extends Schema {
     @type("string") data: string;
 
     @filter(function (
-       this: Canvas,
-       client: Client,
-       value?: Canvas['word'],
-       root?: Schema
+        this: Canvas,
+        client: Client,
+        value?: Canvas['word'],
+        root?: Schema
     ) {
         return this.ownerId === client.sessionId;
     })

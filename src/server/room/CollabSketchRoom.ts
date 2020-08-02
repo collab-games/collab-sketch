@@ -32,16 +32,15 @@ export class CollabSketchRoom extends Room<State> {
         this.onMessage("update-canvas-one", this.updateCanvasOne.bind(this));
         this.onMessage("update-canvas-two", this.updateCanvasTwo.bind(this));
         this.onMessage("guess", this.guessWord.bind(this));
-
     }
 
     onJoin(client: Client, options: any): void {
-        const payload = { sessionId: client.sessionId, counter: this.incrementCounter(), playerName: options.playerName };
+        const payload = {sessionId: client.sessionId, counter: this.incrementCounter(), playerName: options.playerName};
         this.dispatcher.dispatch(new OnJoinCommand(), payload);
     }
 
     async onLeave(client: Client, consented: boolean) {
-        this.dispatcher.dispatch(new OnLeaveCommand(), { client });
+        this.dispatcher.dispatch(new OnLeaveCommand(), {client});
     }
 
     onDispose() {
@@ -49,7 +48,7 @@ export class CollabSketchRoom extends Room<State> {
     }
 
     private startGame(client: Client): void {
-        this.dispatcher.dispatch(new StartGameCommand(), { sessionId: client.sessionId})
+        this.dispatcher.dispatch(new StartGameCommand(), {sessionId: client.sessionId})
     }
 
     private endGame(client: Client): void {
@@ -57,23 +56,23 @@ export class CollabSketchRoom extends Room<State> {
     }
 
     private chooseWord(client: Client, word: string) {
-        this.dispatcher.dispatch(new ChooseWordCommand(), { sessionId: client.sessionId, word})
+        this.dispatcher.dispatch(new ChooseWordCommand(), {sessionId: client.sessionId, word})
     }
 
     private choosePlayer(client: Client, playerId: number) {
-        this.dispatcher.dispatch(new ChoosePlayerCommand(), { sessionId: client.sessionId, playerId})
+        this.dispatcher.dispatch(new ChoosePlayerCommand(), {sessionId: client.sessionId, playerId})
     }
 
     private updateCanvasOne(client: Client, imageData: string) {
-        this.dispatcher.dispatch(new UpdateCanvasOneCommand(), { sessionId: client.sessionId, imageData})
+        this.dispatcher.dispatch(new UpdateCanvasOneCommand(), {sessionId: client.sessionId, imageData})
     }
 
     private updateCanvasTwo(client: Client, imageData: string) {
-        this.dispatcher.dispatch(new UpdateCanvasTwoCommand(), { sessionId: client.sessionId, imageData})
+        this.dispatcher.dispatch(new UpdateCanvasTwoCommand(), {sessionId: client.sessionId, imageData})
     }
 
     private guessWord(client: Client, word: string) {
-        this.dispatcher.dispatch(new OnGuessWordCommand(), { sessionId: client.sessionId, word });
+        this.dispatcher.dispatch(new OnGuessWordCommand(), {sessionId: client.sessionId, word});
     }
 
     private incrementCounter(): number {

@@ -3,7 +3,7 @@ import {State} from "../state/State";
 
 export class CreateGameSettingCommand extends Command<State, { maxClients?: number, password?: string }> {
     // @ts-ignore
-    execute({ maxClients, password }): void {
+    execute({maxClients, password}): void {
         this.room.setState(new State());
         this.room.maxClients = maxClients ? maxClients : 20;
         this.room.autoDispose = true;

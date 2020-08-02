@@ -1,14 +1,14 @@
 import React from 'react';
-import './ChatBox.scss';
 import PropTypes from "prop-types";
-import {MessageType} from "../../common/constants";
 import isEmpty from "lodash/isEmpty";
+import {MessageType} from "../../common/constants";
+import './ChatBox.scss';
 
 
 class ChatBox extends React.Component {
   static propTypes = {
-    G: PropTypes.any.isRequired,
-    moves: PropTypes.any.isRequired,
+    messages: PropTypes.array.isRequired,
+    sendMessage: PropTypes.func.isRequired,
     currentPlayer: PropTypes.any.isRequired,
     isPlayerGuessing: PropTypes.bool.isRequired,
   };
@@ -31,8 +31,8 @@ class ChatBox extends React.Component {
   sendMessage(event) {
     if (event.key === 'Enter' && !isEmpty(this.state.message.trim())) {
       const { message } = this.state;
-      const { moves, isPlayerGuessing } = this.props;
-      isPlayerGuessing && moves.guessArt(message);
+      const { sendMessage, isPlayerGuessing } = this.props;
+      isPlayerGuessing && sendMessage('guess', message);
       this.setState({
         message: ''
       });
@@ -56,8 +56,8 @@ class ChatBox extends React.Component {
         </p>
       }
     };
-    const { G: {chatMessages} } = this.props;
-    return Object.keys(chatMessages).sort().map((key, index) => renderMessage(chatMessages[key], index));
+    const { messages } = this.props;
+    return messages.map( (message, index) => renderMessage(message, index));
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
