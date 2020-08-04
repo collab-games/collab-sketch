@@ -57,7 +57,7 @@ export class State extends Schema {
 
     setCanvas() {
         const words: string[] = this.turn.currentWord.split(' ');
-        this.canvasOne.update(this.getSessionIdForCanvasOnePlayer(), words[0]);
-        this.canvasTwo.update(this.getSessionIdForCanvasTwoPlayer(), words[1]);
+        this.canvasOne.initialize(this.getSessionIdForCanvasOnePlayer(), words[0]);
+        this.canvasTwo.initialize(this.getSessionIdForCanvasTwoPlayer(), words[1]);
     }
 }

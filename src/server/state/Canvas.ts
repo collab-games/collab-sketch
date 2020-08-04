@@ -28,9 +28,10 @@ export class Canvas extends Schema {
         super();
     }
 
-    update(sessionId: string, word: string) {
+    initialize(sessionId: string, word: string) {
         this.ownerId = sessionId;
         this.word = word;
         this.chars = word.length;
+        this.data = undefined;
     }
 }

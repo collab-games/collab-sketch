@@ -39,7 +39,7 @@ class Canvas extends React.Component {
         toolControlNameColor: 'rgba(245,245,245,0.5)',
         hoverControl: '#52565e',
       }
-    })
+    });
     this.painterro.show(this.props.data);
   }
 
