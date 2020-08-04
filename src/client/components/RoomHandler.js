@@ -60,7 +60,7 @@ export default class RoomHandler {
       if (token) {
         return JSON.parse(secretStore)[token];
       } else {
-        return JSON.parse(secretStore);
+        return Object.values(JSON.parse(secretStore))[0];
       }
     } else {
       return null;

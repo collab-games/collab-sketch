@@ -27,7 +27,7 @@ class ShareGame extends React.Component {
 
   render() {
     const {gameID, size} = this.props;
-    const gameUrl = `${window.location.origin}/${gameID}`;
+    const gameUrl = `${window.location.origin}/#gameId=${gameID}`;
     return (
       <div className="share-info">
         <label className="share-game-link">{gameUrl}</label>
