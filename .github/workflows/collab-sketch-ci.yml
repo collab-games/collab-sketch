@@ -1,0 +1,60 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Collab Sketch
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 13.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 13.x
+    - run: npm ci
+    - run: npm test
+      env:
+        CI: true
+
+  build-docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish to Registry
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: srujankumar/collab-sketch
+          tag_with_ref: true
+          tag_with_sha: true
+
+  deploy:
+    needs: build-docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          sudo chmod 600 ~/.ssh/id_rsa
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+        shell: bash
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+      - name: Run container on droplet
+        run: |
+          ssh root@collabsketch.app "mkdir -p /data/certs && echo \"$SSL_CERT\" > /data/certs/cert.pem && echo \"$SSL_KEY\" > /data/certs/key.pem"
+          ssh root@collabsketch.app "mkdir -p /app/db && wget -q https://raw.githubusercontent.com/collab-games/collab-sketch/$GITHUB_SHA/docker-compose.yml -O docker-compose.yml && docker-compose pull && docker-compose up -d"
+        shell: bash
+        env:
+          GITHUB_SHA: ${{ env.GITHUB_SHA }}
+          SSL_CERT: ${{ secrets.SSL_CERT }}
+          SSL_KEY: ${{ secrets.SSL_KEY }}
