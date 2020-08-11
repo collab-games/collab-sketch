@@ -15,15 +15,15 @@ FROM nginx:1.17-alpine
 RUN apk add --update --no-cache supervisor
 RUN apk add --update --no-cache nodejs npm
 WORKDIR /app
-COPY --from=builder ./app/dist /usr/share/nginx/html
-COPY --from=builder ./app/src/server server/
-COPY --from=builder ./app/src/common common/
+COPY --from=builder ./app/dist dist/
+COPY --from=builder ./app/src src/
 COPY --from=builder ./app/tsconfig.json .
 COPY --from=builder ./app/node_modules node_modules/
 COPY --from=builder ./app/package.json .
 COPY --from=builder ./app/supervisord.conf /etc/supervisord.conf
 
-COPY default.conf.template /etc/nginx/conf.d/default.conf
+COPY default.conf.template /etc/nginx/conf.d/default.conf.template
 
-EXPOSE 80
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+EXPOSE 8080
+#CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["npm", "run", "server"]

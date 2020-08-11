@@ -47,7 +47,7 @@ export default class RoomHandler {
 
   getWebSocketClient() {
     const url = window.location.hostname+(window.location.port ? ':'+window.location.port: '');
-    return new Client(`ws://${url}/ws`);
+    return new Client(`ws://${url}`);
   }
 
   attachListeners() {
