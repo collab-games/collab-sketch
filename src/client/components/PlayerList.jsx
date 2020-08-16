@@ -23,7 +23,7 @@ class PlayerList extends React.Component {
   componentDidUpdate(prevProps) {
     const {G, players, currentPlayerId} = this.props;
 
-    if (G.state === GameStatus.STARTED) {
+    if (G.status === GameStatus.STARTED) {
 
       const currentScore = playerFrom(players, currentPlayerId).score;
       const previousScore = playerFrom(prevProps.players, currentPlayerId).score;

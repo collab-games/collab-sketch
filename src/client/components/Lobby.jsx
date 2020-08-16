@@ -3,6 +3,7 @@ import ReactCardFlip from 'react-card-flip';
 import CardFront from "./CardFront";
 import './Lobby.scss';
 import CardBack from "./CardBack";
+import NavbarBrand from "react-bootstrap/NavbarBrand";
 
 class Lobby extends React.Component {
 
@@ -24,6 +25,9 @@ class Lobby extends React.Component {
     const {gameId} = this.props;
     return (
       <div>
+        <nav className="navbar navigation">
+          <NavbarBrand href="/">Collab Sketch</NavbarBrand>
+        </nav>
         <div className="turn-in-card">
           <ReactCardFlip isFlipped={isCardFlipped}>
             <CardFront joinRoomAction={this.joinRoomAction} createRoom={this.props.createRoom}/>
