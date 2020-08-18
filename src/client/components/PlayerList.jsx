@@ -6,6 +6,8 @@ import {FaTrophy} from 'react-icons/fa';
 import './PlayerList.scss';
 import {GameStatus} from "../../common/constants";
 import {playerFrom} from "../../common/players";
+import youGuessMusic from 'public/you-guess.mp3';
+import otherGuessMusic from 'public/other-guess.mp3';
 
 class PlayerList extends React.Component {
   static propTypes = {
@@ -16,8 +18,8 @@ class PlayerList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.correctGuessTone = new UIfx('/public/you-guess.mp3');
-    this.otherGuessTone = new UIfx('/public/other-guess.mp3');
+    this.correctGuessTone = new UIfx(youGuessMusic);
+    this.otherGuessTone = new UIfx(otherGuessMusic);
   }
 
   componentDidUpdate(prevProps) {

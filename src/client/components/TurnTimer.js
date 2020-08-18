@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {BsAlarmFill} from "react-icons/bs";
 import UIfx from 'uifx';
 import './Timer.scss';
+import tickMusic from 'public/tick.mp3';
 
 class TurnTimer extends React.Component {
   static propTypes = {
@@ -19,7 +20,7 @@ class TurnTimer extends React.Component {
     this.decreaseTimer = this.decreaseTimer.bind(this);
     this.renderTimer = this.renderTimer.bind(this);
     this.timerHandler = null;
-    this.timerTick = new UIfx('/public/tick.mp3');
+    this.timerTick = new UIfx(tickMusic);
   }
 
   getRemainingTime() {

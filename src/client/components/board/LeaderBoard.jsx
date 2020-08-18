@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UIfx from 'uifx';
 import "./LeaderBoard.scss";
+import taDaMusic from 'public/ta-da.mp3';
 
 const LeaderBoardTitle = () => {
   return (
@@ -60,7 +61,7 @@ class LeaderBoard extends React.Component {
 
   constructor(props) {
     super(props);
-    new UIfx('/public/ta-da.mp3').play();
+    new UIfx(taDaMusic).play();
   }
 
   render() {
