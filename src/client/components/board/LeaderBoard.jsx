@@ -60,7 +60,7 @@ class LeaderBoard extends React.Component {
 
   constructor(props) {
     super(props);
-    new UIfx('public/ta-da.mp3').play();
+    new UIfx('/public/ta-da.mp3').play();
   }
 
   render() {

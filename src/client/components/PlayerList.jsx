@@ -16,8 +16,8 @@ class PlayerList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.correctGuessTone = new UIfx('public/you-guess.mp3');
-    this.otherGuessTone = new UIfx('public/other-guess.mp3');
+    this.correctGuessTone = new UIfx('/public/you-guess.mp3');
+    this.otherGuessTone = new UIfx('/public/other-guess.mp3');
   }
 
   componentDidUpdate(prevProps) {
