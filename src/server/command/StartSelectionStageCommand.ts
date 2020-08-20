@@ -1,6 +1,8 @@
 import {Command} from "@colyseus/command";
 import {ArraySchema} from "@colyseus/schema";
 import {State} from "../state/State";
+import clone from "lodash/clone";
+import random from "lodash/random";
 import {nextChoosePlayer, resetStages} from "../../common/players";
 
 export class StartSelectionStageCommand extends Command<State, { playerId: number }> {
@@ -8,7 +10,7 @@ export class StartSelectionStageCommand extends Command<State, { playerId: numbe
     execute({playerId}): void {
         this.state.turn.selectionStartTime = this.clock.currentTime;
         this.state.setChoosePlayer(playerId);
-        this.state.turn.chooseWords = new ArraySchema<string>('hello world', 'collab sketch', 'foo bar');
+        this.state.turn.chooseWords = this.getThreeWordsFrom(this.state.words);
 
         // @ts-ignore
         this.room.delayedInterval = this.clock.setTimeout((() => {
@@ -19,5 +21,16 @@ export class StartSelectionStageCommand extends Command<State, { playerId: numbe
             // @ts-ignore
             this.room.dispatcher.dispatch(new StartSelectionStageCommand().setPayload({playerId}));
         }).bind(this), 15000);
+    }
+
+    getThreeWordsFrom(words:ArraySchema<string>): ArraySchema<string> {
+        let pickedWords = new ArraySchema<string>();
+        let all = clone(words);
+        for ( let i = 0; i < 3; i++) {
+            const randomIndex = random(all.length - 1);
+            const randomWord = all.splice(randomIndex, 1);
+            pickedWords.push(...randomWord);
+        }
+        return pickedWords;
     }
 }

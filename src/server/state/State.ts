@@ -1,4 +1,4 @@
-import {MapSchema, Schema, type} from "@colyseus/schema"
+import {ArraySchema, filter, MapSchema, Schema, type} from "@colyseus/schema"
 import {find, findKey} from "lodash";
 import {Player} from "./Player";
 import {Canvas} from "./Canvas";
@@ -13,6 +13,8 @@ export class State extends Schema {
     @type(Settings) settings: Settings;
     @type(Turn) turn: Turn;
     @type("uint8") status: number;
+    @filter(() => false)
+    @type(["string"]) words: ArraySchema<string>;
 
     constructor() {
         super();
@@ -22,6 +24,8 @@ export class State extends Schema {
         this.settings = new Settings(90, 15, 20);
         this.turn = new Turn(0);
         this.status = GameStatus.WAITING;
+        const allWords = process.env.WORDS ? JSON.parse(process.env.WORDS) : ['hello world', 'collab sketch', 'foo bar', 'shashi super', 'super hero'];
+        this.words = new ArraySchema<string>(...allWords);
     }
 
     createPlayer(sessionId: string, playerId: number, playerName: string) {

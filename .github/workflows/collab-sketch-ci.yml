@@ -58,3 +58,4 @@ jobs:
           GITHUB_SHA: ${{ env.GITHUB_SHA }}
           SSL_CERT: ${{ secrets.SSL_CERT }}
           SSL_KEY: ${{ secrets.SSL_KEY }}
+          WORDS: ${{ secrets.WORDS }}

@@ -9,6 +9,7 @@ export class ChooseWordCommand extends Command<State, { sessionId: string, word:
         if (this.state.players[sessionId].stage === Stage.CHOOSE) {
             this.state.turn.currentWord = word;
             this.state.turn.chooseWords = new ArraySchema<string>();
+            this.state.words.splice((this.state.words.indexOf(word)), 1);
         }
     }
 }
