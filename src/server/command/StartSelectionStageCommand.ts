@@ -17,7 +17,7 @@ export class StartSelectionStageCommand extends Command<State, { playerId: numbe
         this.room.delayedInterval = this.clock.setTimeout((() => {
             //@ts-ignore
             this.room.delayedInterval.clear();
-            if (this.state.players.length >= 3) {
+            if (Object.keys(this.state.players).length >= 3) {
                 const playerId = nextChoosePlayer(this.state.players);
                 resetStages(this.state.players);
                 // @ts-ignore

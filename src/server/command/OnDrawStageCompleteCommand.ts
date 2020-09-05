@@ -9,7 +9,7 @@ export class OnDrawStageCompleteCommand extends Command<State, {}> {
     execute(): Array<Command> {
         // @ts-ignore
         this.room.delayedInterval.clear();
-        if (this.state.players.length >= 3) {
+        if (Object.keys(this.state.players).length >= 3) {
             const playerId: number = nextChoosePlayer(this.state.players);
             resetStages(this.state.players);
             this.state.turn = new Turn(this.state.turn.round + 1);
