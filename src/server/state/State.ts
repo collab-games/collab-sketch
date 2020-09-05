@@ -22,7 +22,7 @@ export class State extends Schema {
         this.canvasOne = new Canvas();
         this.canvasTwo = new Canvas();
         this.settings = new Settings(90, 15, 20);
-        this.turn = new Turn(0);
+        this.turn = new Turn(1);
         this.status = GameStatus.WAITING;
         const allWords = process.env.WORDS ? JSON.parse(process.env.WORDS) : ['hello world', 'collab sketch', 'foo bar', 'shashi super', 'super hero'];
         this.words = new ArraySchema<string>(...allWords);
