@@ -4,6 +4,7 @@ import {State} from "../state/State";
 import clone from "lodash/clone";
 import random from "lodash/random";
 import {nextChoosePlayer, resetStages} from "../../common/players";
+import {EndGameBySystemCommand} from "./EndGameBySystemCommand";
 
 export class StartSelectionStageCommand extends Command<State, { playerId: number }> {
     // @ts-ignore
@@ -16,10 +17,15 @@ export class StartSelectionStageCommand extends Command<State, { playerId: numbe
         this.room.delayedInterval = this.clock.setTimeout((() => {
             //@ts-ignore
             this.room.delayedInterval.clear();
-            const playerId = nextChoosePlayer(this.state.players);
-            resetStages(this.state.players);
-            // @ts-ignore
-            this.room.dispatcher.dispatch(new StartSelectionStageCommand().setPayload({playerId}));
+            if (this.state.players.length >= 3) {
+                const playerId = nextChoosePlayer(this.state.players);
+                resetStages(this.state.players);
+                // @ts-ignore
+                this.room.dispatcher.dispatch(new StartSelectionStageCommand().setPayload({playerId}));
+            } else {
+                // @ts-ignore
+                this.room.dispatcher.dispatch(new EndGameBySystemCommand());
+            }
         }).bind(this), 15000);
     }
 
