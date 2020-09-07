@@ -1,5 +1,5 @@
 import {ArraySchema, filter, MapSchema, Schema, type} from "@colyseus/schema"
-import {find, findKey} from "lodash";
+import {find, findKey, filter as _filter} from "lodash";
 import {Player} from "./Player";
 import {Canvas} from "./Canvas";
 import {Settings} from "./Settings";
@@ -35,6 +35,10 @@ export class State extends Schema {
 
     removePlayer(sessionId: string) {
         delete this.players[sessionId];
+    }
+
+    getActivePlayers() {
+        return _filter(this.players, 'connected');
     }
 
     setChoosePlayer(playerId: number) {

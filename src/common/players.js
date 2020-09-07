@@ -27,12 +27,12 @@ export const playerNames = players => Object.values(players).map(player => ({
 }));
 
 export const nextChoosePlayer = (players) => {
-  const numOfPlayers = size(players);
   const currArtistId = artistIdFrom(players);
   if (currArtistId === undefined) {
     return 0;
   }
-  return (currArtistId + 1) % numOfPlayers;
+  const playerIds = Object.values(players).map(player => player.id).sort((prev, next) => prev-next);
+  return playerIds[(playerIds.indexOf(currArtistId) + 1) % size(playerIds)];
 };
 
 export const resetStages = (players) => {
