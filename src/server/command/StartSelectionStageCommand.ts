@@ -17,8 +17,9 @@ export class StartSelectionStageCommand extends Command<State, { playerId: numbe
         this.room.delayedInterval = this.clock.setTimeout((() => {
             //@ts-ignore
             this.room.delayedInterval.clear();
-            if (Object.keys(this.state.players).length >= 3) {
-                const playerId = nextChoosePlayer(this.state.getActivePlayers());
+            const activePlayers = this.state.getActivePlayers();
+            if (Object.keys(activePlayers).length >= 3) {
+                const playerId = nextChoosePlayer(activePlayers);
                 resetStages(this.state.players);
                 // @ts-ignore
                 this.room.dispatcher.dispatch(new StartSelectionStageCommand().setPayload({playerId}));
@@ -26,7 +27,7 @@ export class StartSelectionStageCommand extends Command<State, { playerId: numbe
                 // @ts-ignore
                 this.room.dispatcher.dispatch(new EndGameBySystemCommand());
             }
-        }).bind(this), 15000);
+        }).bind(this), this.state.settings.selectionPeriod * 1000);
     }
 
     getThreeWordsFrom(words:ArraySchema<string>): ArraySchema<string> {

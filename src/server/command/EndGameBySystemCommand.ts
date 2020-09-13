@@ -5,6 +5,8 @@ import {GameStatus} from "../../common/constants";
 export class EndGameBySystemCommand extends Command<State> {
     // @ts-ignore
     execute(): void {
+        //@ts-ignore
+        this.room.delayedInterval.clear();
         this.state.status = GameStatus.ENDED;
     }
 }

@@ -6,6 +6,8 @@ export class EndGameCommand extends Command<State, { sessionId: string }> {
     // @ts-ignore
     execute({sessionId}): void {
         if (this.state.players[sessionId].id === 0) {
+            //@ts-ignore
+            this.room.delayedInterval.clear();
             this.state.status = GameStatus.ENDED;
         }
     }

@@ -12,8 +12,9 @@ export class OnDrawStageCompleteCommand extends Command<State, {}> {
         if (this.state.turn.round >= this.state.settings.numOfRounds) {
             return [new EndGameBySystemCommand()];
         }
-        if (Object.keys(this.state.players).length >= 3) {
-            const playerId: number = nextChoosePlayer(this.state.getActivePlayers());
+        const activePlayers = this.state.getActivePlayers();
+        if (Object.keys(activePlayers).length >= 3) {
+            const playerId: number = nextChoosePlayer(activePlayers);
             resetStages(this.state.players);
             this.state.turn = new Turn(this.state.turn.round + 1);
             return [new StartSelectionStageCommand().setPayload({playerId})];

@@ -11,7 +11,7 @@ export class StartDrawStageCommand extends Command<State, {}> {
         this.room.delayedInterval = this.clock.setTimeout((() => {
             // @ts-ignore
             this.room.dispatcher.dispatch(new EndDrawStageCommand().setPayload({}));
-        }).bind(this), 75000);
+        }).bind(this), this.state.settings.turnPeriod * 1000);
 
     }
 

@@ -21,7 +21,7 @@ export class State extends Schema {
         this.players = new MapSchema<Player>();
         this.canvasOne = new Canvas();
         this.canvasTwo = new Canvas();
-        this.settings = new Settings(90, 15, 20);
+        this.settings = new Settings(90, 20, 20);
         this.turn = new Turn(1);
         this.status = GameStatus.WAITING;
         const allWords = process.env.WORDS ? JSON.parse(process.env.WORDS) : ['hello world', 'collab sketch', 'foo bar', 'shashi super', 'super hero'];
