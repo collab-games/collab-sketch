@@ -9,6 +9,7 @@ export class OnDrawStageCompleteCommand extends Command<State, {}> {
     execute(): Array<Command> {
         // @ts-ignore
         this.room.delayedInterval.clear();
+        this.state.clearCanvas();
         if (this.state.turn.round >= this.state.settings.numOfRounds) {
             return [new EndGameBySystemCommand()];
         }

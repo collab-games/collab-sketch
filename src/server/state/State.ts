@@ -68,4 +68,9 @@ export class State extends Schema {
         this.canvasOne.initialize(this.getSessionIdForCanvasOnePlayer(), words[0]);
         this.canvasTwo.initialize(this.getSessionIdForCanvasTwoPlayer(), words[1]);
     }
+
+    clearCanvas() {
+        this.canvasOne.clear();
+        this.canvasTwo.clear();
+    }
 }

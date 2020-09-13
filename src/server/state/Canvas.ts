@@ -34,4 +34,8 @@ export class Canvas extends Schema {
         this.chars = word.length;
         this.data = undefined;
     }
+
+    clear() {
+        this.data = undefined;
+    }
 }
