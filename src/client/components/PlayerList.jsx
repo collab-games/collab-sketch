@@ -3,6 +3,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import PropTypes from 'prop-types';
 import UIfx from 'uifx';
 import {FaTrophy} from 'react-icons/fa';
+import {isEqual} from "lodash";
 import './PlayerList.scss';
 import {GameStatus} from "../../common/constants";
 import {playerFrom} from "../../common/players";
@@ -25,7 +26,7 @@ class PlayerList extends React.Component {
   componentDidUpdate(prevProps) {
     const {G, players, currentPlayerId} = this.props;
 
-    if (G.status === GameStatus.STARTED) {
+    if (G.status === GameStatus.STARTED && this.hasScoreChanged(prevProps, G)) {
 
       const currentScore = playerFrom(players, currentPlayerId).score;
       const previousScore = playerFrom(prevProps.players, currentPlayerId).score;
@@ -41,6 +42,10 @@ class PlayerList extends React.Component {
         this.otherGuessTone.play();
       }
     }
+  }
+
+  hasScoreChanged(prevProps, G) {
+    return !isEqual(prevProps.G.turn.guessedPlayers, G.turn.guessedPlayers);
   }
 
   isCurrentPlayer(playerId) {
