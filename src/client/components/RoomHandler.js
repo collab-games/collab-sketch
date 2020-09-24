@@ -52,6 +52,10 @@ export default class RoomHandler {
     this.room.onStateChange.once(this.stateChanged);
     this.room.onStateChange(this.stateChanged);
     this.room.onMessage('message', this.updateMessage);
+    this.room.onLeave((code) => {
+      console.log('leave code', code);
+      setTimeout(() => this.reconnect(), 5000);
+    })
   }
 
   getStoredCredentials(gameId, token) {
