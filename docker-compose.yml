@@ -9,4 +9,3 @@ services:
       - /data/certs:/etc/nginx/certs
     environment:
       - WORDS=${WORDS}
-      - USERS=${USERS}
