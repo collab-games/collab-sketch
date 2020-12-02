@@ -52,7 +52,7 @@ jobs:
       - name: Run container on droplet
         run: |
           ssh github@collabsketch.app "sudo mkdir -p /data/certs && echo \"$SSL_CERT\" | sudo tee /data/certs/cert.pem > /dev/null && echo \"$SSL_KEY\" | sudo tee /data/certs/key.pem > /dev/null"
-          ssh github@collabsketch.app 'sudo mkdir -p /app/db && wget -q https://raw.githubusercontent.com/collab-games/collab-sketch/$GITHUB_SHA/docker-compose.yml -O docker-compose.yml && sudo sh -c "export WORDS=$WORDS && docker-compose pull && docker-compose up -d"'
+          ssh github@collabsketch.app "sudo mkdir -p /app/db && wget -q https://raw.githubusercontent.com/collab-games/collab-sketch/$GITHUB_SHA/docker-compose.yml -O docker-compose.yml && sudo docker-compose pull && sudo WORDS=$WORDS docker-compose up -d"
         shell: bash
         env:
           GITHUB_SHA: ${{ env.GITHUB_SHA }}
